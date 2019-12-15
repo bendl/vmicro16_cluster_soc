@@ -1,9 +1,6 @@
-# Verilog 16-bit Multi-core RISC SoC
+# Verilog 16-bit Multi-core RISC SoC with clustering
+Extends the [Vmicro16](https://github.com/bendl/vmicro16) project to support core clustering.
 
-Multi-core RISC System-on-chip - Tested on FPGA H/W with 96 cores.
+![Schematic](docs/img/cluster.png?raw=true "Schematic")
 
-## Configuration
-See `vmicro16_soc_config.v`.
 
----
-Made public on `02/09/2019`.
