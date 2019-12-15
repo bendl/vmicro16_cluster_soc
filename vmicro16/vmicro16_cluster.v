@@ -10,7 +10,17 @@ module vmicro16_cluster #
   parameter NCORES    = 4
 ) (
   input clk,
-  input reset
+  input reset,
+
+  // Driver to soc.IC_DMEM
+  output  [BUS_WIDTH-1:0]                 M_PADDR,
+  output                                  M_PWRITE,
+  output  [0:0]                           M_PSELx,
+  output                                  M_PENABLE,
+  output  [DATA_WIDTH-1:0]                M_PWDATA,
+  // inputs from each slave
+  input   [DATA_WIDTH-1:0]                M_PRDATA,
+  input   [0:0]                           M_PREADY
 );
 
   // Peripherals (master to slave)
@@ -22,6 +32,14 @@ module vmicro16_cluster #
   wire [`DATA_WIDTH-1:0]         ic_dmem_M_PRDATA; // input to intercon
   wire [0:0]                     ic_dmem_M_PREADY; // input
 
+  assign M_PADDR   = ic_dmem_M_PADDR;
+  assign M_PWRITE  = ic_dmem_M_PWRITE;
+  assign M_PSELx   = ic_dmem_M_PSELx;
+  assign M_PENABLE = ic_dmem_M_PENABLE;
+  assign M_PWDATA  = ic_dmem_M_PWDATA;
+  assign M_PRDATA  = ic_dmem_M_PRDATA;
+  assign M_PREADY  = ic_dmem_M_PREADY;
+
   // Master apb interfaces
   wire [NCORES*`APB_WIDTH-1:0]   ic_dmem_W_PADDR;
   wire [NCORES-1:0]              ic_dmem_W_PWRITE;
@@ -30,6 +48,24 @@ module vmicro16_cluster #
   wire [NCORES*`DATA_WIDTH-1:0]  ic_dmem_W_PWDATA;
   wire [NCORES*`DATA_WIDTH-1:0]  ic_dmem_W_PRDATA;
   wire [NCORES-1:0]              ic_dmem_W_PREADY;
+
+  // ic_imem wires
+  wire [`APB_WIDTH-1:0]          ic_imem_M_PADDR;
+  wire                           ic_imem_M_PWRITE;
+  wire [0:0]                     ic_imem_M_PSELx;  // not shared
+  wire                           ic_imem_M_PENABLE;
+  wire [`DATA_WIDTH-1:0]         ic_imem_M_PWDATA;
+  wire [`DATA_WIDTH-1:0]         ic_imem_M_PRDATA; // slave response
+  wire [0:0]                     ic_imem_M_PREADY; // slave response
+
+  // Master apb interfaces
+  wire [NCORES*`APB_WIDTH-1:0]   ic_imem_W_PADDR;
+  wire [NCORES-1:0]              ic_imem_W_PWRITE;
+  wire [NCORES-1:0]              ic_imem_W_PSELx;
+  wire [NCORES-1:0]              ic_imem_W_PENABLE;
+  wire [NCORES*`DATA_WIDTH-1:0]  ic_imem_W_PWDATA;
+  wire [NCORES*`DATA_WIDTH-1:0]  ic_imem_W_PRDATA;
+  wire [NCORES-1:0]              ic_imem_W_PREADY;
 
   apb_intercon_s # (
     .MASTER_PORTS   (NCORES),
@@ -40,7 +76,7 @@ module vmicro16_cluster #
   ) ic_dmem (
     .clk        (clk),
     .reset      (reset),
-    // APB master to slave
+    // Cores to IC_DMEM
     .S_PADDR    (ic_dmem_W_PADDR),
     .S_PWRITE   (ic_dmem_W_PWRITE),
     .S_PSELx    (ic_dmem_W_PSELx),
@@ -48,7 +84,7 @@ module vmicro16_cluster #
     .S_PWDATA   (ic_dmem_W_PWDATA),
     .S_PRDATA   (ic_dmem_W_PRDATA),
     .S_PREADY   (ic_dmem_W_PREADY),
-    // shared bus
+    // IC_DMEM to soc.IC_DMEM
     .M_PADDR    (ic_dmem_M_PADDR),
     .M_PWRITE   (ic_dmem_M_PWRITE),
     .M_PSELx    (ic_dmem_M_PSELx),
@@ -85,6 +121,24 @@ module vmicro16_cluster #
     .M_PREADY   (ic_imem_M_PREADY)
   );
 
+  vmicro16_bram_apb
+  # (
+    .BUS_WIDTH      (`APB_WIDTH),
+    .MEM_WIDTH      (`DATA_WIDTH),
+    .MEM_DEPTH      (`DEF_MEM_INSTR_DEPTH),
+    .USE_INITS      (1),
+    .NAME           ("INSTR_ROM_G")
+  ) imem (
+    .clk            (clk),
+    .reset          (reset),
+    .S_PADDR        (ic_imem_M_PADDR),
+    .S_PWRITE       (0),
+    .S_PSELx        (ic_imem_M_PSELx),
+    .S_PENABLE      (ic_mem_M_PENABLE),
+    .S_PWDATA       (0),
+    .S_PRDATA       (ic_imem_M_PRDATA),
+    .S_PREADY       (ic_imem_M_PREADY)
+  );
 
   genvar c;
   generate

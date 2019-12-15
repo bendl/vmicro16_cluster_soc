@@ -66,6 +66,9 @@
 //////////////////////////////////////////////////////////
 `define APB_WIDTH       (2 + `clog2(`CORES) + `DATA_WIDTH)
 
+`define APB_PSELX_IC_DMEM_DMEM 0
+`define APB_PSELX_IC_DMEM_PERI 1
+
 `define APB_PSELX_GPIO0 0
 `define APB_PSELX_UART0 1
 `define APB_PSELX_REGS0 2
