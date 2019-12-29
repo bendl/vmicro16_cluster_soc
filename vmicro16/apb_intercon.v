@@ -130,22 +130,42 @@ module apb_intercon_s # (
   input   [SLAVE_PORTS*DATA_WIDTH-1:0]    M_PRDATA,
   input   [SLAVE_PORTS-1:0]               M_PREADY
 );
-  reg  [`clog2(MASTER_PORTS)-1:0] active_q = 0;
-  wire [`clog2(MASTER_PORTS)-1:0] active_w;
-  wire [MASTER_PORTS-1:0]         granted;
+  wire [MASTER_PORTS-1:0] grants;
+  localparam GRANTED_INT_BITS = (`clog2(MASTER_PORTS) == 0)
+                              ? 1
+                              : `clog2(MASTER_PORTS);
+  reg [GRANTED_INT_BITS-1:0] granted_int;
+  integer granted_bit;
+  always @(*) begin
+    granted_int = 0;
+    for (granted_bit = 0; granted_bit < MASTER_PORTS; granted_bit = granted_bit + 1)
+      if (grants[granted_bit])
+        granted_int = granted_int | granted_bit;
+  end
 
   // wires for current active_q master
-  wire  [BUS_WIDTH-1:0]   a_S_PADDR   = S_PADDR  [active_q*BUS_WIDTH +: BUS_WIDTH];
-  wire                    a_S_PWRITE  = S_PWRITE [active_q];
-  wire                    a_S_PSELx   = S_PSELx  [active_q];
-  wire                    a_S_PENABLE = S_PENABLE[active_q] & S_PENABLE_gate;
-  wire  [DATA_WIDTH-1:0]  a_S_PWDATA  = S_PWDATA [active_q*DATA_WIDTH +: DATA_WIDTH];
-  wire  [DATA_WIDTH-1:0]  a_S_PRDATA  = S_PRDATA [active_q*DATA_WIDTH +: DATA_WIDTH];
-  wire                    a_S_PREADY  = S_PREADY [active_q];
+  wire  [BUS_WIDTH-1:0]   a_S_PADDR   = S_PADDR  [granted_int*BUS_WIDTH +: BUS_WIDTH];
+  wire                    a_S_PWRITE  = S_PWRITE [granted_int];
+  wire                    a_S_PSELx   = S_PSELx  [granted_int];
+  wire                    a_S_PENABLE = S_PENABLE[granted_int] & S_PENABLE_gate;
+  wire  [DATA_WIDTH-1:0]  a_S_PWDATA  = S_PWDATA [granted_int*DATA_WIDTH +: DATA_WIDTH];
+  wire  [DATA_WIDTH-1:0]  a_S_PRDATA  = S_PRDATA [granted_int*DATA_WIDTH +: DATA_WIDTH];
+  wire                    a_S_PREADY  = S_PREADY [granted_int];
 
+  // Hacky fix to lower passthrough PENABLE for 1 clock in T2
   reg S_PENABLE_gate = 0;
   always @(posedge clk)
     S_PENABLE_gate <= |a_S_PSELx;
+
+  // Arbitrate incoming master requests
+  apb_ic_arbiter_v2 # (
+    .NUM_MASTERS(MASTER_PORTS)
+  ) arbiter (
+    .clk        (clk),
+    .reset      (reset),
+    .reqs       (S_PSELx),
+    .grants     (grants)
+  );
 
   // Decode master PADDR to determine slave PSEL
   apb_addr_dec_v2 # (
@@ -157,26 +177,33 @@ module apb_intercon_s # (
     .pselx      (M_PSELx)
   );
 
-  // Pass through
+  // Pass through outputs to slaves
   assign M_PADDR   = a_S_PADDR;
   assign M_PWRITE  = a_S_PWRITE;
   assign M_PENABLE = a_S_PENABLE;
   assign M_PWDATA  = a_S_PWDATA;
   assign M_PWDATA  = a_S_PWDATA;
 
-  reg M_PSELx_int = 1;
+  reg [GRANTED_INT_BITS-1:0] psel_int;
+  integer psel_bit;
+  always @(*) begin
+    psel_int = 0;
+    for (psel_bit = 0; psel_bit < MASTER_PORTS; psel_bit = psel_bit + 1)
+      if (grants[psel_bit])
+        psel_int = psel_int | psel_bit;
+  end
 
   // Demuxed transfer response back from slave to active_q master
-  wire [BUS_WIDTH-1:0]    a_M_PRDATA = M_PRDATA[M_PSELx_int*DATA_WIDTH +: DATA_WIDTH];
+  wire [BUS_WIDTH-1:0]    a_M_PRDATA = M_PRDATA[psel_int*DATA_WIDTH +: DATA_WIDTH];
 
-  wire [BUS_WIDTH-1:0]    a_M_PRDATA = M_PRDATA[M_PSELx_int*DATA_WIDTH +: DATA_WIDTH];
+  wire [BUS_WIDTH-1:0]    a_M_PRDATA = M_PRDATA[psel_int*DATA_WIDTH +: DATA_WIDTH];
   wire [SLAVE_PORTS-1:0]  a_M_PREADY = |(M_PSELx & M_PREADY);
 
   // transfer back to the active_q master
   always @(*) begin
     S_PREADY = 0;
     S_PRDATA = 0;
-    S_PREADY[active_q]                          = a_M_PREADY;
-    S_PRDATA[active_q*DATA_WIDTH +: DATA_WIDTH] = a_M_PRDATA;
+    S_PREADY[granted_int]                          = a_M_PREADY;
+    S_PRDATA[granted_int*DATA_WIDTH +: DATA_WIDTH] = a_M_PRDATA;
   end
 endmodule
