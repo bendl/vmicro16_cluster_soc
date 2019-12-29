@@ -39,18 +39,22 @@ module tb_arbiter # (
     `rassert (grants == 4'b0001);
 
     reset = 0;
-    @(posedge clk);
+    repeat (5) @(posedge clk);
     `rassert (grants == 4'b0001);
 
     reqs = 4'b0001;
     repeat(5) @(posedge clk);
     `rassert (grants == 4'b00001);
 
-    reqs = 4'b0100;
-    @(posedge clk);
+    reqs = 4'b0110;
+    repeat (5) @(posedge clk);
 
-    reqs = 4'b1000;
-    @(posedge clk);
+    reqs = 4'b0100;
+    repeat (5) @(posedge clk);
+
+    reqs = 4'b0010;
+    repeat (5) @(posedge clk);
+
 
 
   end

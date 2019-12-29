@@ -40,13 +40,13 @@ module nxbar # (
 
   output [N_SLAVES*DWIDTH-1:0] s_addr,
   output [N_SLAVES*DWIDTH-1:0] s_data,
-  output [N_SLAVES-1:0]        s_reqs
+  output [N_SLAVES-1:0]        s_reqs,
 
   input  [N_MASTERS-1:0] reqs,
   output [N_MASTERS-1:0] grants
 );
 
-
+  reg [N_SLAVES-1:0] xs [N_MASTERS-1:0];
 
 endmodule
 
@@ -59,12 +59,14 @@ module apb_ic_arbiter_v2 # (
   input      [NUM_MASTERS-1:0] reqs,
   output reg [NUM_MASTERS-1:0] grants
 );
-  wire                   granted_finished = ~(reqs & grants);
-  wire                   no_reqs          = ~(|reqs);
-  wire [NUM_MASTERS-1:0] grants_nxt       = no_reqs
-                                          ? 1
+  wire [NUM_MASTERS-1:0] current_grant_active = (reqs & grants);
+  wire                   granted_finished     = ~(|(reqs & grants));
+  wire                   no_reqs              = ~(|reqs);
+  wire [NUM_MASTERS-1:0] grants_nxt           = no_reqs
+                                          ? grants
                                           : granted_finished
-                                            ? {grants[NUM_MASTERS-2:1], grants[NUM_MASTERS-1]}
+                                            // 4'b0001 << 1 = 4'b{2:0},{3}
+                                            ? {grants[NUM_MASTERS-2:0], grants[NUM_MASTERS-1]}
                                             : grants;
 
   always @(posedge clk) begin
