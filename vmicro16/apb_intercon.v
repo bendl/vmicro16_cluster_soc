@@ -59,20 +59,45 @@ module apb_ic_arbiter_v2 # (
   input      [NUM_MASTERS-1:0] reqs,
   output reg [NUM_MASTERS-1:0] grants
 );
+  // rotating arbiter barrel shift parts
+  wire                      rotate_msb;
+  wire  [NUM_MASTERS-1-1:0] rotate_lsbs;
+  assign rotate_msb = grants[NUM_MASTERS-1];
+
+  generate
+    if (NUM_MASTERS == 0)
+      $error("NUM_MASTERS must be > 0");
+    else if (NUM_MASTERS == 1)
+      assign rotate_lsbs = grants[0];
+    else if (NUM_MASTERS == 2)
+      assign rotate_lsbs = grants[NUM_MASTERS-1:0];
+    else if (NUM_MASTERS >= 3)
+      assign rotate_lsbs = grants[NUM_MASTERS-2:0];
+  endgenerate
+
   wire [NUM_MASTERS-1:0] current_grant_active = (reqs & grants);
   wire                   granted_finished     = ~(|(reqs & grants));
   wire                   no_reqs              = ~(|reqs);
   wire [NUM_MASTERS-1:0] grants_nxt           = no_reqs
-                                          ? grants
-                                          : granted_finished
-                                            // 4'b0001 << 1 = 4'b{2:0},{3}
-                                            ? {grants[NUM_MASTERS-2:0], grants[NUM_MASTERS-1]}
-                                            : grants;
+                                              ? grants
+                                              : granted_finished
+                                                ? {rotate_lsbs, rotate_msb}
+                                                : grants;
 
   always @(posedge clk) begin
     if (reset) grants <= 1;
     else       grants <= grants_nxt;
   end
+
+`ifdef FORMAL
+  // grants must always be 1h
+  always @(*) `rassert (grants);
+
+  // Print when changing grants
+  always @(posedge clk)
+    if (grants_nxt != grants)
+      $display($time, " arbiter grant: %b", grants_nxt);
+`endif
 endmodule
 
 module apb_intercon_s # (
@@ -117,18 +142,6 @@ module apb_intercon_s # (
   wire  [DATA_WIDTH-1:0]  a_S_PWDATA  = S_PWDATA [active_q*DATA_WIDTH +: DATA_WIDTH];
   wire  [DATA_WIDTH-1:0]  a_S_PRDATA  = S_PRDATA [active_q*DATA_WIDTH +: DATA_WIDTH];
   wire                    a_S_PREADY  = S_PREADY [active_q];
-
-  wire                            active_ended = !a_S_PSELx;
-  wire [`clog2(MASTER_PORTS)-1:0] active_nxt   = (active_q == MASTER_PORTS-1)
-                                               ? 0
-                                               : active_q + 1;
-
-  always @(posedge clk)
-    if (|S_PSELx)
-      if (active_ended)
-        active_q <= active_nxt;
-
-  always @(active_q) $display($time, "\tactive core: %h", active_q);
 
   reg S_PENABLE_gate = 0;
   always @(posedge clk)
