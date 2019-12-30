@@ -13,7 +13,7 @@
    <zoom_setting>
       <ZoomStartTime time="0fs"></ZoomStartTime>
       <ZoomEndTime time="1318436fs"></ZoomEndTime>
-      <Cursor1Time time="1000000fs"></Cursor1Time>
+      <Cursor1Time time="500000fs"></Cursor1Time>
    </zoom_setting>
    <column_width_setting>
       <NameColumnWidth column_width="200"></NameColumnWidth>
@@ -70,18 +70,39 @@
       <wvobject fp_name="/tb_intercon/dut/arbiter/reqs" type="array">
          <obj_property name="ElementShortName">reqs[3:0]</obj_property>
          <obj_property name="ObjectShortName">reqs[3:0]</obj_property>
+         <obj_property name="Radix">BINARYRADIX</obj_property>
       </wvobject>
       <wvobject fp_name="/tb_intercon/dut/arbiter/grants" type="array">
          <obj_property name="ElementShortName">grants[3:0]</obj_property>
          <obj_property name="ObjectShortName">grants[3:0]</obj_property>
+         <obj_property name="Radix">BINARYRADIX</obj_property>
       </wvobject>
       <wvobject fp_name="/tb_intercon/dut/arbiter/current_grant_active" type="array">
          <obj_property name="ElementShortName">current_grant_active[3:0]</obj_property>
          <obj_property name="ObjectShortName">current_grant_active[3:0]</obj_property>
+         <obj_property name="Radix">BINARYRADIX</obj_property>
+      </wvobject>
+      <wvobject fp_name="/tb_intercon/dut/arbiter/no_reqs" type="logic">
+         <obj_property name="ElementShortName">no_reqs</obj_property>
+         <obj_property name="ObjectShortName">no_reqs</obj_property>
       </wvobject>
       <wvobject fp_name="/tb_intercon/dut/arbiter/granted_finished" type="logic">
          <obj_property name="ElementShortName">granted_finished</obj_property>
          <obj_property name="ObjectShortName">granted_finished</obj_property>
+      </wvobject>
+      <wvobject fp_name="/tb_intercon/dut/arbiter/grants_nxt" type="array">
+         <obj_property name="ElementShortName">grants_nxt[3:0]</obj_property>
+         <obj_property name="ObjectShortName">grants_nxt[3:0]</obj_property>
+         <obj_property name="Radix">BINARYRADIX</obj_property>
+      </wvobject>
+      <wvobject fp_name="/tb_intercon/dut/arbiter/rotate_msb" type="logic">
+         <obj_property name="ElementShortName">rotate_msb</obj_property>
+         <obj_property name="ObjectShortName">rotate_msb</obj_property>
+      </wvobject>
+      <wvobject fp_name="/tb_intercon/dut/arbiter/rotate_lsbs" type="array">
+         <obj_property name="ElementShortName">rotate_lsbs[2:0]</obj_property>
+         <obj_property name="ObjectShortName">rotate_lsbs[2:0]</obj_property>
+         <obj_property name="Radix">BINARYRADIX</obj_property>
       </wvobject>
    </wvobject>
    <wvobject fp_name="group382" type="group">

@@ -79,10 +79,17 @@ module tb_intercon # (
     end
 
     repeat (5) @(posedge clk);
+    reset = 0;
+    repeat (1) @(posedge clk);
 
     S_PADDR[2*BUS_WIDTH +: BUS_WIDTH] = 16'h0025;
     S_PSELx[2]                        = 1'b1;
     S_PENABLE[2]                      = 1'b1;
+    repeat (5) @(posedge clk);
+
+    S_PSELx[2]                        = 1'b0;
+    S_PENABLE[2]                      = 1'b0;
+
 
   end
 endmodule
