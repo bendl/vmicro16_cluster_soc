@@ -4,7 +4,7 @@
 `include "../formal.v"
 
 module tb_arbiter # (
-  parameter NUM_MASTERS = 4
+  parameter NUM_MASTERS = 1
 ) ();
 
   // Inputs

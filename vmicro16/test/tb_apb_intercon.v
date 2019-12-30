@@ -30,8 +30,8 @@ module tb_intercon # (
   wire                                  M_PENABLE;
   wire  [DATA_WIDTH-1:0]                M_PWDATA;
   // inputs from each slave
-  reg   [NUM_SLAVES*DATA_WIDTH-1:0]    M_PRDATA; // from model
-  reg   [NUM_SLAVES-1:0]               M_PREADY; // from model
+  wire  [NUM_SLAVES*DATA_WIDTH-1:0]    M_PRDATA; // from model
+  wire  [NUM_SLAVES-1:0]               M_PREADY; // from model
 
   apb_intercon_s # (
     .MASTER_PORTS       (NUM_MASTERS),
@@ -59,6 +59,26 @@ module tb_intercon # (
     .M_PREADY           (M_PREADY)
   );
 
+  genvar gi;
+  generate
+    for (gi = 0; gi < NUM_SLAVES; gi = gi + 1) begin
+      vmicro16_regs_apb
+        p_reg
+      (
+        .clk       (clk),
+        .reset     (reset),
+        .S_PADDR   (M_PADDR),
+        .S_PWRITE  (M_PWRITE),
+        .S_PSELx   (M_PSELx[gi]),
+        .S_PENABLE (M_PENABLE),
+        .S_PWDATA  (M_PWDATA),
+        //
+        .S_PRDATA  (M_PRDATA[gi*DATA_WIDTH +: DATA_WIDTH]),
+        .S_PREADY  (M_PREADY[gi])
+      );
+    end
+  endgenerate
+
   always #10 clk = ~clk;
 
   // Nanosecond time format
@@ -82,13 +102,49 @@ module tb_intercon # (
     reset = 0;
     repeat (1) @(posedge clk);
 
-    S_PADDR[2*BUS_WIDTH +: BUS_WIDTH] = 16'h0025;
-    S_PSELx[2]                        = 1'b1;
-    S_PENABLE[2]                      = 1'b1;
+    S_PADDR[1*BUS_WIDTH +: BUS_WIDTH] = 16'h0011;
+    S_PSELx[1]                        = 1'b1;
+    S_PENABLE[1]                      = 1'b1;
+    S_PWDATA[1*DATA_WIDTH +: DATA_WIDTH] = 16'h1111;
+    S_PWRITE[1]                       = 1'b1;
     repeat (5) @(posedge clk);
 
+    S_PSELx[1]                        = 1'b0;
+    S_PENABLE[1]                      = 1'b0;
+
+    S_PADDR[2*BUS_WIDTH +: BUS_WIDTH] = 16'h0022;
+    S_PSELx[2]                        = 1'b1;
+    S_PENABLE[2]                      = 1'b1;
+    S_PWDATA[2*DATA_WIDTH +: DATA_WIDTH] = 16'h2222;
+    S_PWRITE[2]                       = 1'b1;
+
+    S_PADDR[3*BUS_WIDTH +: BUS_WIDTH] = 16'h0033;
+    S_PSELx[3]                        = 1'b1;
+    S_PENABLE[3]                      = 1'b1;
+    S_PWDATA[3*DATA_WIDTH +: DATA_WIDTH] = 16'h3333;
+    S_PWRITE[3]                       = 1'b1;
+
+
+    repeat (5) @(posedge clk);
     S_PSELx[2]                        = 1'b0;
     S_PENABLE[2]                      = 1'b0;
+
+    repeat (5) @(posedge clk);
+    S_PSELx[3]                        = 1'b0;
+    S_PENABLE[3]                      = 1'b0;
+
+    S_PADDR[2*BUS_WIDTH +: BUS_WIDTH] = 16'h0027;
+    S_PSELx[2]                        = 1'b1;
+    S_PENABLE[2]                      = 1'b1;
+    S_PWDATA[2*DATA_WIDTH +: DATA_WIDTH] = 16'h2277;
+    S_PWRITE[2]                       = 1'b1;
+
+    repeat (5) @(posedge clk);
+    S_PSELx[2]                        = 1'b0;
+    S_PENABLE[2]                      = 1'b0;
+
+
+
 
 
   end
