@@ -12,14 +12,14 @@
    </db_ref_list>
    <zoom_setting>
       <ZoomStartTime time="0fs"></ZoomStartTime>
-      <ZoomEndTime time="695001fs"></ZoomEndTime>
-      <Cursor1Time time="210000fs"></Cursor1Time>
+      <ZoomEndTime time="1956001fs"></ZoomEndTime>
+      <Cursor1Time time="302000fs"></Cursor1Time>
    </zoom_setting>
    <column_width_setting>
       <NameColumnWidth column_width="225"></NameColumnWidth>
       <ValueColumnWidth column_width="111"></ValueColumnWidth>
    </column_width_setting>
-   <WVObjectSize size="8" />
+   <WVObjectSize size="12" />
    <wvobject fp_name="/tb_arbiter/dut/clk" type="logic">
       <obj_property name="ElementShortName">clk</obj_property>
       <obj_property name="ObjectShortName">clk</obj_property>
@@ -29,13 +29,13 @@
       <obj_property name="ObjectShortName">reset</obj_property>
    </wvobject>
    <wvobject fp_name="/tb_arbiter/dut/reqs" type="array">
-      <obj_property name="ElementShortName">reqs[3:0]</obj_property>
-      <obj_property name="ObjectShortName">reqs[3:0]</obj_property>
+      <obj_property name="ElementShortName">reqs[0:0]</obj_property>
+      <obj_property name="ObjectShortName">reqs[0:0]</obj_property>
       <obj_property name="Radix">BINARYRADIX</obj_property>
    </wvobject>
    <wvobject fp_name="/tb_arbiter/dut/grants" type="array">
-      <obj_property name="ElementShortName">grants[3:0]</obj_property>
-      <obj_property name="ObjectShortName">grants[3:0]</obj_property>
+      <obj_property name="ElementShortName">grants[0:0]</obj_property>
+      <obj_property name="ObjectShortName">grants[0:0]</obj_property>
       <obj_property name="Radix">BINARYRADIX</obj_property>
    </wvobject>
    <wvobject fp_name="/tb_arbiter/dut/granted_finished" type="logic">
@@ -47,9 +47,25 @@
       <obj_property name="ObjectShortName">no_reqs</obj_property>
    </wvobject>
    <wvobject fp_name="/tb_arbiter/dut/grants_nxt" type="array">
-      <obj_property name="ElementShortName">grants_nxt[3:0]</obj_property>
-      <obj_property name="ObjectShortName">grants_nxt[3:0]</obj_property>
+      <obj_property name="ElementShortName">grants_nxt[0:0]</obj_property>
+      <obj_property name="ObjectShortName">grants_nxt[0:0]</obj_property>
       <obj_property name="Radix">BINARYRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb_arbiter/dut/NUM_MASTERS" type="array">
+      <obj_property name="ElementShortName">NUM_MASTERS[31:0]</obj_property>
+      <obj_property name="ObjectShortName">NUM_MASTERS[31:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb_arbiter/dut/current_grant_active" type="array">
+      <obj_property name="ElementShortName">current_grant_active[0:0]</obj_property>
+      <obj_property name="ObjectShortName">current_grant_active[0:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb_arbiter/dut/rotate_msb" type="logic">
+      <obj_property name="ElementShortName">rotate_msb</obj_property>
+      <obj_property name="ObjectShortName">rotate_msb</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb_arbiter/dut/rotate_lsbs" type="array">
+      <obj_property name="ElementShortName">rotate_lsbs[-1:0]</obj_property>
+      <obj_property name="ObjectShortName">rotate_lsbs[-1:0]</obj_property>
    </wvobject>
    <wvobject fp_name="/tb_arbiter/dut/NUM_MASTERS" type="array">
       <obj_property name="ElementShortName">NUM_MASTERS[31:0]</obj_property>

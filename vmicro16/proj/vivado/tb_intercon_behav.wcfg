@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wave_config>
+   <wave_state>
+   </wave_state>
+   <db_ref_list>
+      <db_ref path="tb_intercon_behav.wdb" id="1">
+         <top_modules>
+            <top_module name="glbl" />
+            <top_module name="tb_intercon" />
+         </top_modules>
+      </db_ref>
+   </db_ref_list>
+   <zoom_setting>
+      <ZoomStartTime time="0fs"></ZoomStartTime>
+      <ZoomEndTime time="1318436fs"></ZoomEndTime>
+      <Cursor1Time time="1000000fs"></Cursor1Time>
+   </zoom_setting>
+   <column_width_setting>
+      <NameColumnWidth column_width="200"></NameColumnWidth>
+      <ValueColumnWidth column_width="170"></ValueColumnWidth>
+   </column_width_setting>
+   <WVObjectSize size="5" />
+   <wvobject fp_name="/tb_intercon/clk" type="logic">
+      <obj_property name="ElementShortName">clk</obj_property>
+      <obj_property name="ObjectShortName">clk</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb_intercon/reset" type="logic">
+      <obj_property name="ElementShortName">reset</obj_property>
+      <obj_property name="ObjectShortName">reset</obj_property>
+   </wvobject>
+   <wvobject fp_name="group375" type="group">
+      <obj_property name="label">IC</obj_property>
+      <obj_property name="DisplayName">label</obj_property>
+      <obj_property name="isExpanded"></obj_property>
+      <wvobject fp_name="/tb_intercon/S_PADDR" type="array">
+         <obj_property name="ElementShortName">S_PADDR[63:0]</obj_property>
+         <obj_property name="ObjectShortName">S_PADDR[63:0]</obj_property>
+      </wvobject>
+      <wvobject fp_name="/tb_intercon/S_PSELx" type="array">
+         <obj_property name="ElementShortName">S_PSELx[3:0]</obj_property>
+         <obj_property name="ObjectShortName">S_PSELx[3:0]</obj_property>
+         <obj_property name="Radix">BINARYRADIX</obj_property>
+      </wvobject>
+      <wvobject fp_name="/tb_intercon/S_PENABLE" type="array">
+         <obj_property name="ElementShortName">S_PENABLE[3:0]</obj_property>
+         <obj_property name="ObjectShortName">S_PENABLE[3:0]</obj_property>
+         <obj_property name="Radix">BINARYRADIX</obj_property>
+      </wvobject>
+      <wvobject fp_name="/tb_intercon/S_PWRITE" type="array">
+         <obj_property name="ElementShortName">S_PWRITE[3:0]</obj_property>
+         <obj_property name="ObjectShortName">S_PWRITE[3:0]</obj_property>
+      </wvobject>
+      <wvobject fp_name="/tb_intercon/S_PWDATA" type="array">
+         <obj_property name="ElementShortName">S_PWDATA[63:0]</obj_property>
+         <obj_property name="ObjectShortName">S_PWDATA[63:0]</obj_property>
+      </wvobject>
+      <wvobject fp_name="/tb_intercon/S_PRDATA" type="array">
+         <obj_property name="ElementShortName">S_PRDATA[63:0]</obj_property>
+         <obj_property name="ObjectShortName">S_PRDATA[63:0]</obj_property>
+      </wvobject>
+      <wvobject fp_name="/tb_intercon/S_PREADY" type="array">
+         <obj_property name="ElementShortName">S_PREADY[3:0]</obj_property>
+         <obj_property name="ObjectShortName">S_PREADY[3:0]</obj_property>
+      </wvobject>
+   </wvobject>
+   <wvobject fp_name="group376" type="group">
+      <obj_property name="label">ARBITER</obj_property>
+      <obj_property name="DisplayName">label</obj_property>
+      <obj_property name="isExpanded"></obj_property>
+      <wvobject fp_name="/tb_intercon/dut/arbiter/reqs" type="array">
+         <obj_property name="ElementShortName">reqs[3:0]</obj_property>
+         <obj_property name="ObjectShortName">reqs[3:0]</obj_property>
+      </wvobject>
+      <wvobject fp_name="/tb_intercon/dut/arbiter/grants" type="array">
+         <obj_property name="ElementShortName">grants[3:0]</obj_property>
+         <obj_property name="ObjectShortName">grants[3:0]</obj_property>
+      </wvobject>
+      <wvobject fp_name="/tb_intercon/dut/arbiter/current_grant_active" type="array">
+         <obj_property name="ElementShortName">current_grant_active[3:0]</obj_property>
+         <obj_property name="ObjectShortName">current_grant_active[3:0]</obj_property>
+      </wvobject>
+      <wvobject fp_name="/tb_intercon/dut/arbiter/granted_finished" type="logic">
+         <obj_property name="ElementShortName">granted_finished</obj_property>
+         <obj_property name="ObjectShortName">granted_finished</obj_property>
+      </wvobject>
+   </wvobject>
+   <wvobject fp_name="group382" type="group">
+      <obj_property name="label">IC_OUT</obj_property>
+      <obj_property name="DisplayName">label</obj_property>
+      <obj_property name="isExpanded"></obj_property>
+      <wvobject fp_name="/tb_intercon/M_PADDR" type="array">
+         <obj_property name="ElementShortName">M_PADDR[15:0]</obj_property>
+         <obj_property name="ObjectShortName">M_PADDR[15:0]</obj_property>
+      </wvobject>
+      <wvobject fp_name="/tb_intercon/M_PSELx" type="array">
+         <obj_property name="ElementShortName">M_PSELx[3:0]</obj_property>
+         <obj_property name="ObjectShortName">M_PSELx[3:0]</obj_property>
+         <obj_property name="Radix">BINARYRADIX</obj_property>
+      </wvobject>
+      <wvobject fp_name="/tb_intercon/M_PENABLE" type="logic">
+         <obj_property name="ElementShortName">M_PENABLE</obj_property>
+         <obj_property name="ObjectShortName">M_PENABLE</obj_property>
+      </wvobject>
+      <wvobject fp_name="/tb_intercon/M_PWRITE" type="logic">
+         <obj_property name="ElementShortName">M_PWRITE</obj_property>
+         <obj_property name="ObjectShortName">M_PWRITE</obj_property>
+      </wvobject>
+      <wvobject fp_name="/tb_intercon/M_PWDATA" type="array">
+         <obj_property name="ElementShortName">M_PWDATA[15:0]</obj_property>
+         <obj_property name="ObjectShortName">M_PWDATA[15:0]</obj_property>
+      </wvobject>
+      <wvobject fp_name="/tb_intercon/M_PRDATA" type="array">
+         <obj_property name="ElementShortName">M_PRDATA[63:0]</obj_property>
+         <obj_property name="ObjectShortName">M_PRDATA[63:0]</obj_property>
+      </wvobject>
+      <wvobject fp_name="/tb_intercon/M_PREADY" type="array">
+         <obj_property name="ElementShortName">M_PREADY[3:0]</obj_property>
+         <obj_property name="ObjectShortName">M_PREADY[3:0]</obj_property>
+      </wvobject>
+   </wvobject>
+</wave_config>

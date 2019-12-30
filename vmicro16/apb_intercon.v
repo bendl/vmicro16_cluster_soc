@@ -168,7 +168,7 @@ module apb_intercon_s # (
   );
 
   // Decode master PADDR to determine slave PSEL
-  apb_addr_dec_v2 # (
+  apb_ic_dec_v2 # (
     .MSB        (ADDR_MSB),
     .LSB        (ADDR_LSB),
     .ADDR_WIDTH (BUS_WIDTH)
@@ -195,11 +195,10 @@ module apb_intercon_s # (
 
   // Demuxed transfer response back from slave to active_q master
   wire [BUS_WIDTH-1:0]    a_M_PRDATA = M_PRDATA[psel_int*DATA_WIDTH +: DATA_WIDTH];
-
-  wire [BUS_WIDTH-1:0]    a_M_PRDATA = M_PRDATA[psel_int*DATA_WIDTH +: DATA_WIDTH];
   wire [SLAVE_PORTS-1:0]  a_M_PREADY = |(M_PSELx & M_PREADY);
 
   // transfer back to the active_q master
+  // TODO: required?
   always @(*) begin
     S_PREADY = 0;
     S_PRDATA = 0;
