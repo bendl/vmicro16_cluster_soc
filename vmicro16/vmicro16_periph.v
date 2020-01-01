@@ -15,7 +15,7 @@ module vmicro16_psel_err_apb (
     input                           S_PSELx,
     input                           S_PENABLE,
     input  [0:0]                    S_PWDATA,
-    
+
     // prdata not used
     output [0:0]                    S_PRDATA,
     output                          S_PREADY,
@@ -43,7 +43,7 @@ module vmicro16_watchdog_apb # (
     input                           S_PSELx,
     input                           S_PENABLE,
     input  [0:0]                    S_PWDATA,
-    
+
     // prdata not used
     output [0:0]                    S_PRDATA,
     output                          S_PREADY,
@@ -81,7 +81,7 @@ module timer_apb # (
     input reset,
 
     input clk_en,
-    
+
     // 0 16-bit value   R/W
     // 1 16-bit control R    b0 = start, b1 = reset
     // 2 16-bit prescaler
@@ -91,7 +91,7 @@ module timer_apb # (
     input                           S_PSELx,
     input                           S_PENABLE,
     input      [`DATA_WIDTH-1:0]    S_PWDATA,
-    
+
     output reg [`DATA_WIDTH-1:0]    S_PRDATA,
     output                          S_PREADY,
 
@@ -115,7 +115,7 @@ module timer_apb # (
     localparam ADDR_LOAD = 2'b00;
     localparam ADDR_CTRL = 2'b01;
     localparam ADDR_PRES = 2'b10;
-    
+
     always @(*) begin
         S_PRDATA = 0;
         if (en)
@@ -165,7 +165,7 @@ module timer_apb # (
                     r_counter <= r_counter -1;
             end else if (r_ctrl[CTRL_RESET])
                 r_counter <= r_load;
-            
+
     // generate the output pulse when r_counter == 0
     //   out = (counter reached zero && counter started)
     assign out      = (r_counter == 0) && r_ctrl[CTRL_START]; // && r_ctrl[CTRL_INT];
@@ -191,7 +191,7 @@ module vmicro16_bram_prog_apb # (
     input                           S_PSELx,
     input                           S_PENABLE,
     input  [BUS_WIDTH-1:0]          S_PWDATA,
-    
+
     output [BUS_WIDTH-1:0]          S_PRDATA,
     output                          S_PREADY,
 
@@ -246,7 +246,7 @@ module vmicro16_bram_apb # (
     input                           S_PSELx,
     input                           S_PENABLE,
     input  [BUS_WIDTH-1:0]          S_PWDATA,
-    
+
     output [BUS_WIDTH-1:0]          S_PRDATA,
     output                          S_PREADY
 );
@@ -262,7 +262,7 @@ module vmicro16_bram_apb # (
 
     always @(posedge clk)
         if (we)
-            $display($time, "\t\t%s[%h] <= %h", NAME, 
+            $display($time, "\t\t%s[%h] <= %h", NAME,
                 S_PADDR, S_PWDATA);
 
     vmicro16_bram # (
@@ -302,7 +302,7 @@ module vmicro16_bram_ex_apb # (
     input                           S_PSELx,
     input                           S_PENABLE,
     input  [MEM_WIDTH-1:0]          S_PWDATA,
-    
+
     output reg [MEM_WIDTH-1:0]      S_PRDATA,
     output                          S_PREADY
 );
@@ -312,7 +312,7 @@ module vmicro16_bram_ex_apb # (
 
     localparam ADDR_BITS = `clog2(MEM_DEPTH);
 
-    // hack to create a 1 clock delay to S_PREADY 
+    // hack to create a 1 clock delay to S_PREADY
     // for bram to be ready
     reg cdelay = 1;
     always @(posedge clk)
@@ -329,7 +329,7 @@ module vmicro16_bram_ex_apb # (
     // Similar to:
     //   http://infocenter.arm.com/help/index.jsp?topic=/com.arm.doc.dui0204f/Cihbghef.html
 
-    // mem_wd is the CORE_ID sent in bits [18:16] 
+    // mem_wd is the CORE_ID sent in bits [18:16]
     localparam TOP_BIT_INDEX         = `APB_WIDTH -1;
     localparam PADDR_CORE_ID_MSB     = TOP_BIT_INDEX - 2;
     localparam PADDR_CORE_ID_LSB     = PADDR_CORE_ID_MSB - (CORE_ID_BITS-1);
@@ -369,7 +369,7 @@ module vmicro16_bram_ex_apb # (
         else
             S_PRDATA = mem_out;
 
-    wire reg_we = en && ((lwex && !is_locked) 
+    wire reg_we = en && ((lwex && !is_locked)
                       || (swex && swex_success));
 
     reg  [CORE_ID_BITS:0] reg_wd;
@@ -406,12 +406,12 @@ module vmicro16_bram_ex_apb # (
 
     always @(*)
         if (S_PSELx && S_PENABLE)
-            $display($time, "\t\tBRAMex[%h] READ %h\tCORE: %h", 
+            $display($time, "\t\tBRAMex[%h] READ %h\tCORE: %h",
                 mem_addr, mem_out, S_PADDR[16 +: CORE_ID_BITS]);
 
     always @(posedge clk)
         if (we)
-            $display($time, "\t\tBRAMex[%h] WRITE %h\tCORE: %h", 
+            $display($time, "\t\tBRAMex[%h] WRITE %h\tCORE: %h",
                 mem_addr, S_PWDATA, S_PADDR[16 +: CORE_ID_BITS]);
 
     vmicro16_bram # (
@@ -436,7 +436,8 @@ module vmicro16_regs_apb # (
     parameter DATA_WIDTH        = 16,
     parameter CELL_DEPTH        = 8,
     parameter PARAM_DEFAULTS_R0 = 0,
-    parameter PARAM_DEFAULTS_R1 = 0
+    parameter PARAM_DEFAULTS_R1 = 0,
+    parameter DBUG_NAME         = "REGS_APB"
 ) (
     input clk,
     input reset,
@@ -446,7 +447,7 @@ module vmicro16_regs_apb # (
     input                           S_PSELx,
     input                           S_PENABLE,
     input  [DATA_WIDTH-1:0]         S_PWDATA,
-    
+
     output [DATA_WIDTH-1:0]         S_PRDATA,
     output                          S_PREADY
 );
@@ -458,10 +459,9 @@ module vmicro16_regs_apb # (
 
     always @(*)
         if (reg_we)
-            $display($time, "\t\tREGS_APB[%h] <= %h", 
-                S_PADDR, S_PWDATA);
+            $display($time, "\t\t%s[%h] <= %h", DBUG_NAME, S_PADDR, S_PWDATA);
 
-    always @(*) 
+    always @(*)
         `rassert(reg_we == (S_PSELx & S_PENABLE & S_PWRITE))
 
     vmicro16_regs # (
@@ -499,7 +499,7 @@ module vmicro16_gpio_apb # (
     input                           S_PSELx,
     input                           S_PENABLE,
     input  [DATA_WIDTH-1:0]         S_PWDATA,
-    
+
     output [DATA_WIDTH-1:0]         S_PRDATA,
     output                          S_PREADY,
     output reg [PORTS-1:0]          gpio
@@ -512,7 +512,7 @@ module vmicro16_gpio_apb # (
         if (reset)
             gpio <= 0;
         else if (ports_we) begin
-            $display($time, "\t\%s <= %h", NAME, S_PWDATA[PORTS-1:0]);
+            $display($time, "\t\%s[%h] <= %h", NAME, S_PADDR, S_PWDATA[PORTS-1:0]);
             gpio <= S_PWDATA[PORTS-1:0];
         end
 endmodule

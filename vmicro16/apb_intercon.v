@@ -9,13 +9,14 @@
 module apb_ic_dec_v2 # (
   parameter MSB        = 7,
   parameter LSB        = 4,
-  parameter MASK_RANGE = 2**(MSB-LSB+1), // do not set
-  parameter ADDR_WIDTH = 16
+  parameter ADDR_WIDTH = 16,
+  parameter MASK_RANGE = 2**(MSB-LSB+1) // do not set
 ) (
   input  [ADDR_WIDTH-1:0] addr,
   output [MASK_RANGE-1:0] pselx
 );
-  wire [MASK_RANGE-1:0] masked_addr = addr[MSB:LSB];
+  wire [MSB:LSB] masked_addr;
+  assign masked_addr = addr[MSB:LSB];
 
   genvar p;
   generate

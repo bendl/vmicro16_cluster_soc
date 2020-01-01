@@ -66,18 +66,27 @@
 //////////////////////////////////////////////////////////
 `define APB_WIDTH       (2 + `clog2(`CORES) + `DATA_WIDTH)
 
-`define APB_PSELX_IC_DMEM_DMEM 0
-`define APB_PSELX_IC_DMEM_PERI 1
+`define IC_DMEM_DEC_MSB 12
+`define IC_DMEM_DEC_LSB 12
 
-`define APB_PSELX_GPIO0 0
-`define APB_PSELX_UART0 1
-`define APB_PSELX_REGS0 2
-`define APB_PSELX_BRAM0 3
-`define APB_PSELX_GPIO1 4
-`define APB_PSELX_GPIO2 5
-`define APB_PSELX_TIMR0 6
-`define APB_PSELX_WDOG0 7
-`define APB_PSELX_PERR0 8
+`define IC_DMEM_DMEM 0
+`define IC_DMEM_PERI 1
+
+
+
+`define IC_DMEM_PSEL_BRAM 0
+`define IC_DMEM_PMEM_DEC_MSB 7
+`define IC_DMEM_PMEM_DEC_LSB 4
+`define IC_DMEM_PMEM_PSEL_GPIO0 0
+`define IC_DMEM_PMEM_PSEL_GPIO1 1
+`define IC_DMEM_PMEM_PSEL_GPIO2 2
+`define IC_DMEM_PMEM_PSEL_UART0 3
+`define IC_DMEM_PMEM_PSEL_REGS0 4
+`define IC_DMEM_PMEM_PSEL_TIMR0 5
+`define IC_DMEM_PMEM_PSEL_WDOG0 6
+`define IC_DMEM_PMEM_PSEL_PERR0 7
+`define IC_DMEM_PMEM_PSEL__LAST 8
+`define IC_DMEM_PMEM_PSEL__NUM  `IC_DMEM_PMEM_PSEL__LAST
 
 `define APB_GPIO0_PINS  8
 `define APB_GPIO1_PINS  16
