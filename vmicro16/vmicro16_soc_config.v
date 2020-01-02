@@ -17,7 +17,7 @@
 //////////////////////////////////////////////////////////
 // Per core instruction memory
 //  Set this to give each core its own instruction memory cache
-//`define DEF_CORE_HAS_INSTR_MEM
+`define DEF_CORE_HAS_INSTR_MEM
 
 // Top level data width for registers, memory cells, bus widths
 `define DATA_WIDTH      16
@@ -65,6 +65,9 @@
 // Memory mapping
 //////////////////////////////////////////////////////////
 `define APB_WIDTH       (2 + `clog2(`CORES) + `DATA_WIDTH)
+
+`define IC_CLUSTER_DEC_MSB 15
+`define IC_CLUSTER_DEC_LSB 15
 
 `define IC_DMEM_PSEL_PERI 0
 `define IC_DMEM_PSEL_DMEM 1
