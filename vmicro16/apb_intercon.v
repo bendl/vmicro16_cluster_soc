@@ -27,30 +27,6 @@ module apb_ic_dec_v2 # (
 
 endmodule
 
-module nxbar # (
-  parameter N_MASTERS = 2,
-  parameter N_SLAVES  = 4,
-  parameter DWIDTH    = 16
-) (
-  input clk,
-  input reset,
-
-  input  [N_MASTERS*DWIDTH-1:0] m_addr,
-  input  [N_MASTERS*DWIDTH-1:0] m_data,
-  input  [N_MASTERS-1:0]        m_reqs,
-
-  output [N_SLAVES*DWIDTH-1:0] s_addr,
-  output [N_SLAVES*DWIDTH-1:0] s_data,
-  output [N_SLAVES-1:0]        s_reqs,
-
-  input  [N_MASTERS-1:0] reqs,
-  output [N_MASTERS-1:0] grants
-);
-
-  reg [N_SLAVES-1:0] xs [N_MASTERS-1:0];
-
-endmodule
-
 module apb_ic_arbiter_v2 # (
   parameter NUM_MASTERS = 4
 ) (
@@ -107,7 +83,9 @@ module apb_intercon_s # (
   parameter MASTER_PORTS = 1,
   parameter SLAVE_PORTS  = 16,
   parameter ADDR_MSB     = 7,
-  parameter ADDR_LSB     = 4
+  parameter ADDR_LSB     = 4,
+  // dont change
+  parameter PSEL_RANGE   = 2**(ADDR_MSB-ADDR_LSB+1)
 ) (
   input clk,
   input reset,
@@ -124,13 +102,15 @@ module apb_intercon_s # (
   // MASTER interface to a slave
   output  [BUS_WIDTH-1:0]                 M_PADDR,
   output                                  M_PWRITE,
-  output  [SLAVE_PORTS-1:0]               M_PSELx,
+  output  [PSEL_RANGE-1:0]                M_PSELx,
   output                                  M_PENABLE,
   output  [DATA_WIDTH-1:0]                M_PWDATA,
   // inputs from each slave
-  input   [SLAVE_PORTS*DATA_WIDTH-1:0]    M_PRDATA,
-  input   [SLAVE_PORTS-1:0]               M_PREADY
+  input   [PSEL_RANGE*DATA_WIDTH-1:0]    M_PRDATA,
+  input   [PSEL_RANGE-1:0]               M_PREADY
 );
+  wire selected = |S_PSELx;
+
   wire [MASTER_PORTS-1:0] grants;
   localparam GRANTED_INT_BITS = (`clog2(MASTER_PORTS) == 0)
                               ? 1
@@ -144,6 +124,9 @@ module apb_intercon_s # (
         granted_int = granted_int | granted_bit;
   end
 
+  // TODO: fix hack
+  reg S_PENABLE_gate = 0;
+
   // wires for current active_q master
   wire  [BUS_WIDTH-1:0]   a_S_PADDR   = S_PADDR  [granted_int*BUS_WIDTH +: BUS_WIDTH];
   wire                    a_S_PWRITE  = S_PWRITE [granted_int];
@@ -154,9 +137,9 @@ module apb_intercon_s # (
   wire                    a_S_PREADY  = S_PREADY [granted_int];
 
   // Hacky fix to lower passthrough PENABLE for 1 clock in T2
-  reg S_PENABLE_gate = 0;
   always @(posedge clk)
-    S_PENABLE_gate <= |a_S_PSELx;
+  //  S_PENABLE_gate <= |a_S_PSELx;
+    S_PENABLE_gate <= 1'b1;
 
   // Arbitrate incoming master requests
   apb_ic_arbiter_v2 # (
@@ -181,7 +164,7 @@ module apb_intercon_s # (
   // Pass through outputs to slaves
   assign M_PADDR   = a_S_PADDR;
   assign M_PWRITE  = a_S_PWRITE;
-  assign M_PENABLE = a_S_PENABLE;
+  assign M_PENABLE = a_S_PENABLE & selected;
   assign M_PWDATA  = a_S_PWDATA;
   assign M_PWDATA  = a_S_PWDATA;
 
@@ -191,12 +174,12 @@ module apb_intercon_s # (
     psel_int = 0;
     for (psel_bit = 0; psel_bit < MASTER_PORTS; psel_bit = psel_bit + 1)
       if (grants[psel_bit])
-        psel_int = psel_int | psel_bit;
+        psel_int = psel_int | grants[psel_bit];
   end
 
   // Demuxed transfer response back from slave to active_q master
-  wire [BUS_WIDTH-1:0]    a_M_PRDATA = M_PRDATA[psel_int*DATA_WIDTH +: DATA_WIDTH];
-  wire [SLAVE_PORTS-1:0]  a_M_PREADY = |(M_PSELx & M_PREADY);
+  wire [BUS_WIDTH-1:0] a_M_PRDATA = M_PRDATA[psel_int*DATA_WIDTH +: DATA_WIDTH];
+  wire                 a_M_PREADY = |(M_PSELx & M_PREADY);
 
   // transfer back to the active_q master
   // TODO: required?

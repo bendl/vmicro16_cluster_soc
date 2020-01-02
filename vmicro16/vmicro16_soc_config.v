@@ -66,17 +66,17 @@
 //////////////////////////////////////////////////////////
 `define APB_WIDTH       (2 + `clog2(`CORES) + `DATA_WIDTH)
 
+`define IC_DMEM_PSEL_PERI 0
+`define IC_DMEM_PSEL_DMEM 1
+
+// BRAM address = 0x1000 to 0x1FFF
 `define IC_DMEM_DEC_MSB 12
 `define IC_DMEM_DEC_LSB 12
 
-`define IC_DMEM_DMEM 0
-`define IC_DMEM_PERI 1
-
-
-
-`define IC_DMEM_PSEL_BRAM 0
+// PMEM address = 0x0000 to 0x00ff
 `define IC_DMEM_PMEM_DEC_MSB 7
 `define IC_DMEM_PMEM_DEC_LSB 4
+
 `define IC_DMEM_PMEM_PSEL_GPIO0 0
 `define IC_DMEM_PMEM_PSEL_GPIO1 1
 `define IC_DMEM_PMEM_PSEL_GPIO2 2
@@ -87,7 +87,6 @@
 `define IC_DMEM_PMEM_PSEL_PERR0 7
 `define IC_DMEM_PMEM_PSEL__LAST 8
 `define IC_DMEM_PMEM_PSEL__NUM  `IC_DMEM_PMEM_PSEL__LAST
-
 `define APB_GPIO0_PINS  8
 `define APB_GPIO1_PINS  16
 `define APB_GPIO2_PINS  8

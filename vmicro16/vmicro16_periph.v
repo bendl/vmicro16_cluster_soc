@@ -245,9 +245,9 @@ module vmicro16_bram_apb # (
     input                           S_PWRITE,
     input                           S_PSELx,
     input                           S_PENABLE,
-    input  [BUS_WIDTH-1:0]          S_PWDATA,
+    input  [MEM_WIDTH-1:0]          S_PWDATA,
 
-    output [BUS_WIDTH-1:0]          S_PRDATA,
+    output [MEM_WIDTH-1:0]          S_PRDATA,
     output                          S_PREADY
 );
     wire [MEM_WIDTH-1:0] mem_out;

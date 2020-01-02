@@ -12,14 +12,14 @@
    </db_ref_list>
    <zoom_setting>
       <ZoomStartTime time="0fs"></ZoomStartTime>
-      <ZoomEndTime time="917001fs"></ZoomEndTime>
-      <Cursor1Time time="139000fs"></Cursor1Time>
+      <ZoomEndTime time="1063722fs"></ZoomEndTime>
+      <Cursor1Time time="390000fs"></Cursor1Time>
    </zoom_setting>
    <column_width_setting>
       <NameColumnWidth column_width="225"></NameColumnWidth>
-      <ValueColumnWidth column_width="172"></ValueColumnWidth>
+      <ValueColumnWidth column_width="168"></ValueColumnWidth>
    </column_width_setting>
-   <WVObjectSize size="6" />
+   <WVObjectSize size="11" />
    <wvobject fp_name="/tb_intercon_periph/clk" type="logic">
       <obj_property name="ElementShortName">clk</obj_property>
       <obj_property name="ObjectShortName">clk</obj_property>
@@ -28,99 +28,225 @@
       <obj_property name="ElementShortName">reset</obj_property>
       <obj_property name="ObjectShortName">reset</obj_property>
    </wvobject>
+   <wvobject fp_name="/tb_intercon_periph/S_PSELx" type="array">
+      <obj_property name="ElementShortName">S_PSELx[3:0]</obj_property>
+      <obj_property name="ObjectShortName">S_PSELx[3:0]</obj_property>
+      <obj_property name="Radix">BINARYRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb_intercon_periph/S_PENABLE" type="array">
+      <obj_property name="ElementShortName">S_PENABLE[3:0]</obj_property>
+      <obj_property name="ObjectShortName">S_PENABLE[3:0]</obj_property>
+      <obj_property name="Radix">BINARYRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb_intercon_periph/S_PREADY" type="array">
+      <obj_property name="ElementShortName">S_PREADY[3:0]</obj_property>
+      <obj_property name="ObjectShortName">S_PREADY[3:0]</obj_property>
+      <obj_property name="Radix">BINARYRADIX</obj_property>
+   </wvobject>
    <wvobject fp_name="group411" type="group">
       <obj_property name="label">MASTERS</obj_property>
       <obj_property name="DisplayName">label</obj_property>
       <obj_property name="isExpanded"></obj_property>
-      <wvobject fp_name="/tb_intercon_periph/dut/S_PADDR" type="array">
+      <wvobject fp_name="/tb_intercon_periph/main_ic/S_PADDR" type="array">
          <obj_property name="ElementShortName">S_PADDR[63:0]</obj_property>
          <obj_property name="ObjectShortName">S_PADDR[63:0]</obj_property>
-         <obj_property name="Radix">HEXRADIX</obj_property>
       </wvobject>
-      <wvobject fp_name="/tb_intercon_periph/dut/S_PWRITE" type="array">
+      <wvobject fp_name="/tb_intercon_periph/main_ic/S_PWRITE" type="array">
          <obj_property name="ElementShortName">S_PWRITE[3:0]</obj_property>
          <obj_property name="ObjectShortName">S_PWRITE[3:0]</obj_property>
          <obj_property name="Radix">BINARYRADIX</obj_property>
       </wvobject>
-      <wvobject fp_name="/tb_intercon_periph/dut/S_PSELx" type="array">
+      <wvobject fp_name="/tb_intercon_periph/main_ic/S_PSELx" type="array">
          <obj_property name="ElementShortName">S_PSELx[3:0]</obj_property>
          <obj_property name="ObjectShortName">S_PSELx[3:0]</obj_property>
          <obj_property name="Radix">BINARYRADIX</obj_property>
       </wvobject>
-      <wvobject fp_name="/tb_intercon_periph/dut/S_PENABLE" type="array">
+      <wvobject fp_name="/tb_intercon_periph/main_ic/S_PENABLE" type="array">
          <obj_property name="ElementShortName">S_PENABLE[3:0]</obj_property>
          <obj_property name="ObjectShortName">S_PENABLE[3:0]</obj_property>
          <obj_property name="Radix">BINARYRADIX</obj_property>
       </wvobject>
-      <wvobject fp_name="/tb_intercon_periph/dut/S_PWDATA" type="array">
+      <wvobject fp_name="/tb_intercon_periph/main_ic/S_PWDATA" type="array">
          <obj_property name="ElementShortName">S_PWDATA[63:0]</obj_property>
          <obj_property name="ObjectShortName">S_PWDATA[63:0]</obj_property>
-         <obj_property name="Radix">HEXRADIX</obj_property>
+      </wvobject>
+      <wvobject fp_name="/tb_intercon_periph/main_ic/S_PRDATA" type="array">
+         <obj_property name="ElementShortName">S_PRDATA[63:0]</obj_property>
+         <obj_property name="ObjectShortName">S_PRDATA[63:0]</obj_property>
+      </wvobject>
+      <wvobject fp_name="/tb_intercon_periph/main_ic/S_PREADY" type="array">
+         <obj_property name="ElementShortName">S_PREADY[3:0]</obj_property>
+         <obj_property name="ObjectShortName">S_PREADY[3:0]</obj_property>
+         <obj_property name="Radix">BINARYRADIX</obj_property>
       </wvobject>
    </wvobject>
    <wvobject fp_name="group414" type="group">
       <obj_property name="label">IC</obj_property>
       <obj_property name="DisplayName">label</obj_property>
       <obj_property name="isExpanded"></obj_property>
-      <wvobject fp_name="/tb_intercon_periph/dut/grants" type="array">
+      <wvobject fp_name="/tb_intercon_periph/main_ic/S_PENABLE_gate" type="logic">
+         <obj_property name="ElementShortName">S_PENABLE_gate</obj_property>
+         <obj_property name="ObjectShortName">S_PENABLE_gate</obj_property>
+      </wvobject>
+      <wvobject fp_name="/tb_intercon_periph/main_ic/a_S_PENABLE" type="logic">
+         <obj_property name="ElementShortName">a_S_PENABLE</obj_property>
+         <obj_property name="ObjectShortName">a_S_PENABLE</obj_property>
+      </wvobject>
+      <wvobject fp_name="/tb_intercon_periph/main_ic/a_S_PSELx" type="logic">
+         <obj_property name="ElementShortName">a_S_PSELx</obj_property>
+         <obj_property name="ObjectShortName">a_S_PSELx</obj_property>
+      </wvobject>
+      <wvobject fp_name="/tb_intercon_periph/main_ic/granted_int" type="array">
+         <obj_property name="ElementShortName">granted_int[1:0]</obj_property>
+         <obj_property name="ObjectShortName">granted_int[1:0]</obj_property>
+      </wvobject>
+      <wvobject fp_name="/tb_intercon_periph/main_ic/grants" type="array">
          <obj_property name="ElementShortName">grants[3:0]</obj_property>
          <obj_property name="ObjectShortName">grants[3:0]</obj_property>
          <obj_property name="Radix">BINARYRADIX</obj_property>
-      </wvobject>
-      <wvobject fp_name="/tb_intercon_periph/dut/arbiter/current_grant_active" type="array">
-         <obj_property name="ElementShortName">current_grant_active[3:0]</obj_property>
-         <obj_property name="ObjectShortName">current_grant_active[3:0]</obj_property>
-         <obj_property name="Radix">BINARYRADIX</obj_property>
-      </wvobject>
-      <wvobject fp_name="/tb_intercon_periph/dut/arbiter/granted_finished" type="logic">
-         <obj_property name="ElementShortName">granted_finished</obj_property>
-         <obj_property name="ObjectShortName">granted_finished</obj_property>
-      </wvobject>
-      <wvobject fp_name="/tb_intercon_periph/dut/arbiter/grants_nxt" type="array">
-         <obj_property name="ElementShortName">grants_nxt[3:0]</obj_property>
-         <obj_property name="ObjectShortName">grants_nxt[3:0]</obj_property>
-         <obj_property name="Radix">BINARYRADIX</obj_property>
-      </wvobject>
-      <wvobject fp_name="/tb_intercon_periph/dut/psel_int" type="array">
-         <obj_property name="ElementShortName">psel_int[1:0]</obj_property>
-         <obj_property name="ObjectShortName">psel_int[1:0]</obj_property>
       </wvobject>
    </wvobject>
    <wvobject fp_name="group426" type="group">
       <obj_property name="label">IC_OUT</obj_property>
       <obj_property name="DisplayName">label</obj_property>
       <obj_property name="isExpanded"></obj_property>
-      <wvobject fp_name="/tb_intercon_periph/dut/M_PADDR" type="array">
+      <wvobject fp_name="/tb_intercon_periph/main_ic/M_PADDR" type="array">
          <obj_property name="ElementShortName">M_PADDR[15:0]</obj_property>
          <obj_property name="ObjectShortName">M_PADDR[15:0]</obj_property>
       </wvobject>
-      <wvobject fp_name="/tb_intercon_periph/dut/M_PWRITE" type="logic">
+      <wvobject fp_name="/tb_intercon_periph/main_ic/M_PWRITE" type="logic">
          <obj_property name="ElementShortName">M_PWRITE</obj_property>
          <obj_property name="ObjectShortName">M_PWRITE</obj_property>
       </wvobject>
-      <wvobject fp_name="/tb_intercon_periph/dut/M_PSELx" type="array">
-         <obj_property name="ElementShortName">M_PSELx[0:0]</obj_property>
-         <obj_property name="ObjectShortName">M_PSELx[0:0]</obj_property>
+      <wvobject fp_name="/tb_intercon_periph/main_ic/M_PSELx" type="array">
+         <obj_property name="ElementShortName">M_PSELx[1:0]</obj_property>
+         <obj_property name="ObjectShortName">M_PSELx[1:0]</obj_property>
+         <obj_property name="Radix">BINARYRADIX</obj_property>
       </wvobject>
-      <wvobject fp_name="/tb_intercon_periph/dut/M_PENABLE" type="logic">
+      <wvobject fp_name="/tb_intercon_periph/main_ic/M_PENABLE" type="logic">
          <obj_property name="ElementShortName">M_PENABLE</obj_property>
          <obj_property name="ObjectShortName">M_PENABLE</obj_property>
       </wvobject>
-      <wvobject fp_name="/tb_intercon_periph/dut/M_PWDATA" type="array">
+      <wvobject fp_name="/tb_intercon_periph/main_ic/M_PWDATA" type="array">
          <obj_property name="ElementShortName">M_PWDATA[15:0]</obj_property>
          <obj_property name="ObjectShortName">M_PWDATA[15:0]</obj_property>
       </wvobject>
-      <wvobject fp_name="/tb_intercon_periph/dut/M_PRDATA" type="array">
-         <obj_property name="ElementShortName">M_PRDATA[15:0]</obj_property>
-         <obj_property name="ObjectShortName">M_PRDATA[15:0]</obj_property>
+      <wvobject fp_name="/tb_intercon_periph/main_ic/M_PRDATA" type="array">
+         <obj_property name="ElementShortName">M_PRDATA[31:0]</obj_property>
+         <obj_property name="ObjectShortName">M_PRDATA[31:0]</obj_property>
       </wvobject>
-      <wvobject fp_name="/tb_intercon_periph/dut/M_PREADY" type="array">
-         <obj_property name="ElementShortName">M_PREADY[0:0]</obj_property>
-         <obj_property name="ObjectShortName">M_PREADY[0:0]</obj_property>
+      <wvobject fp_name="/tb_intercon_periph/main_ic/M_PREADY" type="array">
+         <obj_property name="ElementShortName">M_PREADY[1:0]</obj_property>
+         <obj_property name="ObjectShortName">M_PREADY[1:0]</obj_property>
+         <obj_property name="Radix">BINARYRADIX</obj_property>
       </wvobject>
    </wvobject>
    <wvobject fp_name="group415" type="group">
       <obj_property name="label">SLAVES</obj_property>
       <obj_property name="DisplayName">label</obj_property>
+      <obj_property name="isExpanded"></obj_property>
+   </wvobject>
+   <wvobject fp_name="group441" type="group">
+      <obj_property name="label">sub_ic</obj_property>
+      <obj_property name="DisplayName">label</obj_property>
+      <obj_property name="isExpanded"></obj_property>
+      <wvobject fp_name="/tb_intercon_periph/periphs_sub_ic/S_PADDR" type="array">
+         <obj_property name="ElementShortName">S_PADDR[15:0]</obj_property>
+         <obj_property name="ObjectShortName">S_PADDR[15:0]</obj_property>
+      </wvobject>
+      <wvobject fp_name="/tb_intercon_periph/periphs_sub_ic/S_PWRITE" type="array">
+         <obj_property name="ElementShortName">S_PWRITE[0:0]</obj_property>
+         <obj_property name="ObjectShortName">S_PWRITE[0:0]</obj_property>
+      </wvobject>
+      <wvobject fp_name="/tb_intercon_periph/periphs_sub_ic/S_PSELx" type="array">
+         <obj_property name="ElementShortName">S_PSELx[0:0]</obj_property>
+         <obj_property name="ObjectShortName">S_PSELx[0:0]</obj_property>
+      </wvobject>
+      <wvobject fp_name="/tb_intercon_periph/periphs_sub_ic/S_PENABLE" type="array">
+         <obj_property name="ElementShortName">S_PENABLE[0:0]</obj_property>
+         <obj_property name="ObjectShortName">S_PENABLE[0:0]</obj_property>
+      </wvobject>
+      <wvobject fp_name="/tb_intercon_periph/periphs_sub_ic/S_PWDATA" type="array">
+         <obj_property name="ElementShortName">S_PWDATA[15:0]</obj_property>
+         <obj_property name="ObjectShortName">S_PWDATA[15:0]</obj_property>
+      </wvobject>
+      <wvobject fp_name="/tb_intercon_periph/periphs_sub_ic/S_PRDATA" type="array">
+         <obj_property name="ElementShortName">S_PRDATA[15:0]</obj_property>
+         <obj_property name="ObjectShortName">S_PRDATA[15:0]</obj_property>
+      </wvobject>
+      <wvobject fp_name="/tb_intercon_periph/periphs_sub_ic/S_PREADY" type="array">
+         <obj_property name="ElementShortName">S_PREADY[0:0]</obj_property>
+         <obj_property name="ObjectShortName">S_PREADY[0:0]</obj_property>
+      </wvobject>
+      <wvobject fp_name="/tb_intercon_periph/periphs_sub_ic/ic_pmem_M_PADDR" type="array">
+         <obj_property name="ElementShortName">ic_pmem_M_PADDR[15:0]</obj_property>
+         <obj_property name="ObjectShortName">ic_pmem_M_PADDR[15:0]</obj_property>
+      </wvobject>
+      <wvobject fp_name="/tb_intercon_periph/periphs_sub_ic/ic_pmem_M_PWRITE" type="logic">
+         <obj_property name="ElementShortName">ic_pmem_M_PWRITE</obj_property>
+         <obj_property name="ObjectShortName">ic_pmem_M_PWRITE</obj_property>
+      </wvobject>
+      <wvobject fp_name="/tb_intercon_periph/periphs_sub_ic/ic_pmem_M_PSELx" type="array">
+         <obj_property name="ElementShortName">ic_pmem_M_PSELx[7:0]</obj_property>
+         <obj_property name="ObjectShortName">ic_pmem_M_PSELx[7:0]</obj_property>
+      </wvobject>
+      <wvobject fp_name="/tb_intercon_periph/periphs_sub_ic/ic_pmem_M_PENABLE" type="logic">
+         <obj_property name="ElementShortName">ic_pmem_M_PENABLE</obj_property>
+         <obj_property name="ObjectShortName">ic_pmem_M_PENABLE</obj_property>
+      </wvobject>
+      <wvobject fp_name="/tb_intercon_periph/periphs_sub_ic/ic_pmem_M_PWDATA" type="array">
+         <obj_property name="ElementShortName">ic_pmem_M_PWDATA[15:0]</obj_property>
+         <obj_property name="ObjectShortName">ic_pmem_M_PWDATA[15:0]</obj_property>
+      </wvobject>
+      <wvobject fp_name="/tb_intercon_periph/periphs_sub_ic/ic_pmem_M_PRDATA" type="array">
+         <obj_property name="ElementShortName">ic_pmem_M_PRDATA[127:0]</obj_property>
+         <obj_property name="ObjectShortName">ic_pmem_M_PRDATA[127:0]</obj_property>
+      </wvobject>
+      <wvobject fp_name="/tb_intercon_periph/periphs_sub_ic/ic_pmem_M_PREADY" type="array">
+         <obj_property name="ElementShortName">ic_pmem_M_PREADY[7:0]</obj_property>
+         <obj_property name="ObjectShortName">ic_pmem_M_PREADY[7:0]</obj_property>
+      </wvobject>
+   </wvobject>
+   <wvobject fp_name="group449" type="group">
+      <obj_property name="label">main_per</obj_property>
+      <obj_property name="DisplayName">label</obj_property>
+      <obj_property name="isExpanded"></obj_property>
+      <wvobject fp_name="/tb_intercon_periph/main_peripheral/S_PADDR" type="array">
+         <obj_property name="ElementShortName">S_PADDR[11:0]</obj_property>
+         <obj_property name="ObjectShortName">S_PADDR[11:0]</obj_property>
+      </wvobject>
+      <wvobject fp_name="/tb_intercon_periph/main_peripheral/S_PWRITE" type="logic">
+         <obj_property name="ElementShortName">S_PWRITE</obj_property>
+         <obj_property name="ObjectShortName">S_PWRITE</obj_property>
+      </wvobject>
+      <wvobject fp_name="/tb_intercon_periph/main_peripheral/S_PSELx" type="logic">
+         <obj_property name="ElementShortName">S_PSELx</obj_property>
+         <obj_property name="ObjectShortName">S_PSELx</obj_property>
+      </wvobject>
+      <wvobject fp_name="/tb_intercon_periph/main_peripheral/S_PENABLE" type="logic">
+         <obj_property name="ElementShortName">S_PENABLE</obj_property>
+         <obj_property name="ObjectShortName">S_PENABLE</obj_property>
+      </wvobject>
+      <wvobject fp_name="/tb_intercon_periph/main_peripheral/S_PWDATA" type="array">
+         <obj_property name="ElementShortName">S_PWDATA[15:0]</obj_property>
+         <obj_property name="ObjectShortName">S_PWDATA[15:0]</obj_property>
+      </wvobject>
+      <wvobject fp_name="/tb_intercon_periph/main_peripheral/S_PRDATA" type="array">
+         <obj_property name="ElementShortName">S_PRDATA[15:0]</obj_property>
+         <obj_property name="ObjectShortName">S_PRDATA[15:0]</obj_property>
+      </wvobject>
+      <wvobject fp_name="/tb_intercon_periph/main_peripheral/S_PREADY" type="logic">
+         <obj_property name="ElementShortName">S_PREADY</obj_property>
+         <obj_property name="ObjectShortName">S_PREADY</obj_property>
+      </wvobject>
+      <wvobject fp_name="/tb_intercon_periph/main_peripheral/mem_out" type="array">
+         <obj_property name="ElementShortName">mem_out[15:0]</obj_property>
+         <obj_property name="ObjectShortName">mem_out[15:0]</obj_property>
+      </wvobject>
+      <wvobject fp_name="group476" type="group">
+         <obj_property name="label">sub_per</obj_property>
+         <obj_property name="DisplayName">label</obj_property>
+         <obj_property name="isExpanded"></obj_property>
+      </wvobject>
    </wvobject>
 </wave_config>
