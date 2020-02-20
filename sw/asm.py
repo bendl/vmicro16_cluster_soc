@@ -343,7 +343,7 @@ with open(args.fname, "r") as f:
             if all_instr[i].label:
                 print("{:s}:".format(all_instr[i].label.name))
             print("\t{:x}\t{:s}\t\t{:04x}".format(i, all_instr[i].linestr, b), end = '')
-            
+
             print("")
             out.write("{:04x}\n".format(b))
         print("\nWritten asm.s.hex file!")

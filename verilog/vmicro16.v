@@ -1,5 +1,5 @@
 
-// This file contains multiple modules. 
+// This file contains multiple modules.
 //   Verilator likes 1 file for each module
 /* verilator lint_off DECLFILENAME */
 /* verilator lint_off UNUSED */
@@ -29,9 +29,9 @@ module vmicro16_bram # (
     parameter PARAM_DEFAULTS_R3 = 0,
     parameter NAME          = "BRAM"
 ) (
-    input clk, 
+    input clk,
     input reset,
-    
+
     input      [`clog2(MEM_DEPTH)-1:0] mem_addr,
     input      [MEM_WIDTH-1:0]         mem_in,
     input                              mem_we,
@@ -58,9 +58,10 @@ module vmicro16_bram # (
 
             `define TEST_ASM
             `ifdef TEST_ASM
-            $readmemh("E:\\Projects\\uni\\vmicro16\\sw\\asm.s.hex", mem);
+            //$readmemh("E:\\Projects\\uni\\vmicro16\\sw\\asm.s.hex", mem);
+            $readmemh("sw/asm.s.hex", mem);
             `endif
-            
+
             //`define TEST_COND
             `ifdef TEST_COND
             mem[0] = {`VMICRO16_OP_MOVI,    3'h7, 8'hC0}; // lock
@@ -106,7 +107,7 @@ module vmicro16_bram # (
             mem[4] = {`VMICRO16_OP_BR,      3'h3, `VMICRO16_OP_BR_U};
             mem[5] = {`VMICRO16_OP_MOVI,    3'h0, 8'hFF};
             `endif
-            
+
             //`define ALL_TEST
             `ifdef ALL_TEST
             // Standard all test
@@ -125,7 +126,7 @@ module vmicro16_bram # (
             // UART0
             mem[9]  = {`VMICRO16_OP_MOVI,    3'h0, 8'hA0};      // UART0
             mem[10] = {`VMICRO16_OP_MOVI,    3'h1, 8'h41};      // ascii A
-            mem[11] = {`VMICRO16_OP_SW,      3'h1, 3'h0, 5'h0}; 
+            mem[11] = {`VMICRO16_OP_SW,      3'h1, 3'h0, 5'h0};
             mem[12] = {`VMICRO16_OP_MOVI,    3'h1, 8'h42}; // ascii B
             mem[13] = {`VMICRO16_OP_SW,      3'h1, 3'h0, 5'h0};
             mem[14] = {`VMICRO16_OP_MOVI,    3'h1, 8'h43}; // ascii C
@@ -167,7 +168,7 @@ module vmicro16_bram # (
         // synchronous WRITE_FIRST (page 13)
         if (mem_we) begin
             mem[mem_addr] <= mem_in;
-            $display($time, "\t\t%s[%h] <= %h", 
+            $display($time, "\t\t%s[%h] <= %h",
                     NAME, mem_addr, mem_in);
         end else
             mem_out <= mem[mem_addr];
@@ -187,10 +188,10 @@ module vmicro16_core_mmu # (
 ) (
     input clk,
     input reset,
-    
+
     input  req,
     output busy,
-    
+
     // From core
     input      [MEM_WIDTH-1:0]  mmu_addr,
     input      [MEM_WIDTH-1:0]  mmu_in,
@@ -200,8 +201,8 @@ module vmicro16_core_mmu # (
     output reg [MEM_WIDTH-1:0]  mmu_out,
 
     // interrupts
-    output reg [`DATA_WIDTH*`DEF_NUM_INT-1:0] ints_vector,
-    output reg [`DEF_NUM_INT-1:0]             ints_mask,
+    output reg [MEM_WIDTH*`DEF_NUM_INT-1:0] ints_vector,
+    output reg [`DEF_NUM_INT-1:0]           ints_mask,
 
     // TO APB interconnect
     output reg [`APB_WIDTH-1:0]  M_PADDR,
@@ -217,28 +218,24 @@ module vmicro16_core_mmu # (
     localparam MMU_STATE_T2  = 1;
     localparam MMU_STATE_T3  = 2;
     reg [1:0]  mmu_state      = MMU_STATE_T1;
-    
+
     reg  [MEM_WIDTH-1:0] per_out = 0;
     wire [MEM_WIDTH-1:0] tim0_out;
 
     assign busy = req || (mmu_state == MMU_STATE_T2);
 
-    // more luts than below but easier
-    //wire tim0_en = (mmu_addr >= `DEF_MMU_TIM0_S) 
-    //            && (mmu_addr <= `DEF_MMU_TIM0_E);
-    //wire sreg_en = (mmu_addr >= `DEF_MMU_SREG_S) 
-    //            && (mmu_addr <= `DEF_MMU_SREG_E);
-    //wire intv_en = (mmu_addr >= `DEF_MMU_INTSV_S) 
-    //            && (mmu_addr <= `DEF_MMU_INTSV_E);
-    //wire intm_en = (mmu_addr >= `DEF_MMU_INTSM_S) 
-    //            && (mmu_addr <= `DEF_MMU_INTSM_E);
+    wire is_local_addr = ~(|mmu_addr[`IC_CLUSTER_DEC_MSB:`IC_CLUSTER_DEC_LSB]);
 
-    wire tim0_en = ~mmu_addr[12] && ~mmu_addr[9] && ~mmu_addr[7];
-    wire sreg_en = mmu_addr[7] && ~mmu_addr[4] && ~mmu_addr[5];
-    wire intv_en = mmu_addr[8] && ~mmu_addr[3];
-    wire intm_en = mmu_addr[8] && mmu_addr[3];
-    
-    wire apb_en    = !(|{tim0_en, sreg_en, intv_en, intm_en});
+    // TODO: use fewer resources for this
+    wire tim0_en = is_local_addr && (mmu_addr <= 16'h00ff);
+    wire sreg_en = is_local_addr && (mmu_addr >= 16'h0100)
+                                 && (mmu_addr <= 16'h0107);
+    wire intv_en = is_local_addr && (mmu_addr >= 16'h0110)
+                                 && (mmu_addr <= 16'h0117);
+    wire intm_en = is_local_addr && (mmu_addr == 16'h0118);
+
+    wire apb_en = !is_local_addr;
+    //wire apb_en    = !(|{tim0_en, sreg_en, intv_en, intm_en});
     wire tim0_we   = (tim0_en && mmu_we);
     wire intv_we   = (intv_en && mmu_we);
     wire intm_we   = (intm_en && mmu_we);
@@ -258,12 +255,11 @@ module vmicro16_core_mmu # (
     always @(posedge clk)
         if (intm_we)
             ints_mask <= mmu_in;
-            
 
     always @(ints_vector)
-        $display($time, 
+        $display($time,
                 "\tC%d\t\tints_vector W: | %h %h %h %h | %h %h %h %h |",
-                 CORE_ID, 
+                 CORE_ID,
             ints_vector[0*`DATA_WIDTH +: `DATA_WIDTH],
             ints_vector[1*`DATA_WIDTH +: `DATA_WIDTH],
             ints_vector[2*`DATA_WIDTH +: `DATA_WIDTH],
@@ -281,7 +277,7 @@ module vmicro16_core_mmu # (
     always @(*)
         if      (tim0_en) mmu_out = tim0_out;
         else if (sreg_en) mmu_out = sr_val;
-        else if (intv_en) mmu_out = ints_vector[mmu_addr[2:0]*`DATA_WIDTH 
+        else if (intv_en) mmu_out = ints_vector[mmu_addr[2:0]*`DATA_WIDTH
                                                     +: `DATA_WIDTH];
         else if (intm_en) mmu_out = ints_mask;
         else              mmu_out = per_out;
@@ -295,16 +291,16 @@ module vmicro16_core_mmu # (
             M_PWDATA  <= 0;
             M_PSELx   <= 0;
             M_PWRITE  <= 0;
-        end 
+        end
         else
             casex (mmu_state)
                 MMU_STATE_T1: begin
                     if (req && apb_en) begin
-                        M_PADDR   <= {mmu_lwex, 
-                                      mmu_swex, 
-                                      CORE_ID[CORE_ID_BITS-1:0], 
+                        M_PADDR   <= {mmu_lwex,
+                                      mmu_swex,
+                                      CORE_ID[CORE_ID_BITS-1:0],
                                       mmu_addr[MEM_WIDTH-1:0]};
-                        
+
                         M_PWDATA  <= mmu_in;
                         M_PSELx   <= 1;
                         M_PWRITE  <= mmu_we;
@@ -316,7 +312,7 @@ module vmicro16_core_mmu # (
                 `ifdef FIX_T3
                     MMU_STATE_T2: begin
                         M_PENABLE <= 1;
-                        
+
                         if (M_PREADY == 1'b1) begin
                             mmu_state <= MMU_STATE_T3;
                         end
@@ -358,41 +354,39 @@ module vmicro16_core_mmu # (
 
     (* ram_style = "block" *)
     vmicro16_bram # (
-        .MEM_WIDTH  (MEM_WIDTH),
-        .MEM_DEPTH  (SPECIAL_REGS),
-        .USE_INITS  (0),
-        .PARAM_DEFAULTS_R0  (CORE_ID),
-        .PARAM_DEFAULTS_R1  (`CORES),
-        .PARAM_DEFAULTS_R2  (`APB_BRAM0_CELLS),
-        .PARAM_DEFAULTS_R3  (`SLAVES),
-        .NAME       ("ram_sr")
+        .MEM_WIDTH         (MEM_WIDTH),
+        .MEM_DEPTH         (SPECIAL_REGS),
+        .USE_INITS         (0),
+        .PARAM_DEFAULTS_R0 (CORE_ID),
+        .PARAM_DEFAULTS_R1 (`CORES),
+        .PARAM_DEFAULTS_R2 (`APB_BRAM0_CELLS),
+        .PARAM_DEFAULTS_R3 (`SLAVES),
+        .NAME              ("ram_sr")
     ) ram_sr (
-        .clk        (clk),
-        .reset      (reset),
-        .mem_addr   (mmu_addr[`clog2(SPECIAL_REGS)-1:0]),
-        .mem_in     (),
-        .mem_we     (),
-        .mem_out    (sr_val)
+        .clk               (clk),
+        .reset             (reset),
+        .mem_addr          (mmu_addr),
+        .mem_in            (),
+        .mem_we            (),
+        .mem_out           (sr_val)
     );
 
     // Each M core has a TIM0 scratch memory
     (* ram_style = "block" *)
     vmicro16_bram # (
-        .MEM_WIDTH  (MEM_WIDTH),
-        .MEM_DEPTH  (MEM_DEPTH),
-        .USE_INITS  (0),
-        .NAME       ("TIM0")
+        .MEM_WIDTH         (MEM_WIDTH),
+        .MEM_DEPTH         (MEM_DEPTH),
+        .USE_INITS         (0),
+        .NAME              ("TIM0")
     ) TIM0 (
-        .clk        (clk),
-        .reset      (reset),
-        .mem_addr   (mmu_addr[7:0]),
-        .mem_in     (mmu_in),
-        .mem_we     (tim0_we),
-        .mem_out    (tim0_out)
+        .clk               (clk),
+        .reset             (reset),
+        .mem_addr          (mmu_addr),
+        .mem_in            (mmu_in),
+        .mem_we            (tim0_we),
+        .mem_out           (tim0_out)
     );
 endmodule
-
-
 
 module vmicro16_regs # (
     parameter CELL_WIDTH        = 16,
@@ -404,7 +398,7 @@ module vmicro16_regs # (
     parameter PARAM_DEFAULTS_R0 = 16'h0000,
     parameter PARAM_DEFAULTS_R1 = 16'h0000
 ) (
-    input clk, 
+    input clk,
     input reset,
     // Dual port register reads
     input      [CELL_SEL_BITS-1:0]  rs1, // port 1
@@ -415,19 +409,19 @@ module vmicro16_regs # (
     input                           we,
     input [CELL_SEL_BITS-1:0]       ws1,
     input [CELL_WIDTH-1:0]          wd
-); 
+);
     (* ram_style = "distributed" *)
     reg [CELL_WIDTH-1:0] regs [0:CELL_DEPTH-1] /*verilator public_flat*/;
-    
+
     // Initialise registers with default values
     //   Really only used for special registers used by the soc
     // TODO: How to do this on reset?
     integer i;
-    initial 
-        if (CELL_DEFAULTS) 
+    initial
+        if (CELL_DEFAULTS)
             $readmemh(CELL_DEFAULTS, regs);
         else begin
-            for(i = 0; i < CELL_DEPTH; i = i + 1) 
+            for(i = 0; i < CELL_DEPTH; i = i + 1)
                 regs[i] = 0;
             regs[0] = PARAM_DEFAULTS_R0;
             regs[1] = PARAM_DEFAULTS_R1;
@@ -435,23 +429,23 @@ module vmicro16_regs # (
 
     `ifdef ICARUS
         always @(regs)
-            $display($time, "\tC%02h\t\t| %h %h %h %h | %h %h %h %h |", 
-                CORE_ID, 
-                regs[0], regs[1], regs[2], regs[3], 
+            $display($time, "\tC%02h\t\t| %h %h %h %h | %h %h %h %h |",
+                CORE_ID,
+                regs[0], regs[1], regs[2], regs[3],
                 regs[4], regs[5], regs[6], regs[7]);
     `endif
 
-    always @(posedge clk) 
+    always @(posedge clk)
         if (reset) begin
-            for(i = 0; i < CELL_DEPTH; i = i + 1) 
+            for(i = 0; i < CELL_DEPTH; i = i + 1)
                 regs[i] <= 0;
             regs[0] <= PARAM_DEFAULTS_R0;
             regs[1] <= PARAM_DEFAULTS_R1;
         end
         else if (we) begin
-            $display($time, "\tC%02h: REGS #%s: Writing %h to reg[%d]", 
+            $display($time, "\tC%02h: REGS #%s: Writing %h to reg[%d]",
                 CORE_ID, DEBUG_NAME, wd, ws1);
-            
+
             // Perform the write
             regs[ws1] <= wd;
         end
@@ -497,10 +491,10 @@ module vmicro16_dec # (
 
     output reg has_lwex,
     output reg has_swex
-    
+
     // TODO: Use to identify bad instruction and
     //       raise exceptions
-    //,output     is_bad 
+    //,output     is_bad
 );
     assign opcode = instr[15:11];
     assign rd     = instr[10:8];
@@ -517,7 +511,7 @@ module vmicro16_dec # (
             `VMICRO16_OP_SPCL_HALT,
             `VMICRO16_OP_SPCL_INTR:   alu_op = `VMICRO16_ALU_NOP;
             default:                  alu_op = `VMICRO16_ALU_NOP; endcase
-        
+
         `VMICRO16_OP_LW:              alu_op = `VMICRO16_ALU_LW;
         `VMICRO16_OP_SW:              alu_op = `VMICRO16_ALU_SW;
         `VMICRO16_OP_LWEX:            alu_op = `VMICRO16_ALU_LW;
@@ -531,7 +525,7 @@ module vmicro16_dec # (
 
         `VMICRO16_OP_CMP:             alu_op = `VMICRO16_ALU_CMP;
         `VMICRO16_OP_SETC:            alu_op = `VMICRO16_ALU_SETC;
-        
+
         `VMICRO16_OP_BIT:     casez (simm5)
             `VMICRO16_OP_BIT_OR:      alu_op = `VMICRO16_ALU_BIT_OR;
             `VMICRO16_OP_BIT_XOR:     alu_op = `VMICRO16_ALU_BIT_XOR;
@@ -546,14 +540,14 @@ module vmicro16_dec # (
             `VMICRO16_OP_ARITH_USUB:  alu_op = `VMICRO16_ALU_ARITH_USUB;
             `VMICRO16_OP_ARITH_UADDI: alu_op = `VMICRO16_ALU_ARITH_UADDI;
             default:                  alu_op = `VMICRO16_ALU_BAD; endcase
-        
+
         `VMICRO16_OP_ARITH_S:     casez (simm5)
             `VMICRO16_OP_ARITH_SADD:  alu_op = `VMICRO16_ALU_ARITH_SADD;
             `VMICRO16_OP_ARITH_SSUB:  alu_op = `VMICRO16_ALU_ARITH_SSUB;
-            `VMICRO16_OP_ARITH_SSUBI: alu_op = `VMICRO16_ALU_ARITH_SSUBI; 
+            `VMICRO16_OP_ARITH_SSUBI: alu_op = `VMICRO16_ALU_ARITH_SSUBI;
             default:                  alu_op = `VMICRO16_ALU_BAD; endcase
-        
-        default: begin  
+
+        default: begin
                                       alu_op = `VMICRO16_ALU_NOP;
             $display($time, "\tDEC: unknown opcode: %h ... NOPPING", opcode);
         end
@@ -581,7 +575,7 @@ module vmicro16_dec # (
     endcase
 
     // Contains 4-bit immediate
-    always @(*) 
+    always @(*)
         if( ((opcode == `VMICRO16_OP_ARITH_U) && (simm5[4] == 0)) ||
             ((opcode == `VMICRO16_OP_ARITH_S) && (simm5[4] == 0)) )
             has_imm4 = 1'b1;
@@ -600,13 +594,13 @@ module vmicro16_dec # (
     //    `VMICRO16_OP_MOVI_L:    has_imm12 = 1'b1;
     //    default:                has_imm12 = 1'b0;
     //endcase
-    
+
     // Will branch the pc
     always @(*) case (opcode)
         `VMICRO16_OP_BR:    has_br = 1'b1;
         default:            has_br = 1'b0;
     endcase
-    
+
     // Requires external memory
     always @(*) case (opcode)
         `VMICRO16_OP_LW,
@@ -615,7 +609,7 @@ module vmicro16_dec # (
         `VMICRO16_OP_SWEX:  has_mem = 1'b1;
         default:            has_mem = 1'b0;
     endcase
-    
+
     // Requires external memory write
     always @(*) case (opcode)
         `VMICRO16_OP_SW,
@@ -689,7 +683,7 @@ module vmicro16_alu # (
         `ifdef DEF_ALU_HW_MULT
             `VMICRO16_ALU_MULT:  c = a * b;
         `endif
-        
+
         `VMICRO16_ALU_ARITH_SADD:   c = $signed(a) + $signed(b);
         `VMICRO16_ALU_ARITH_SSUB:   c = $signed(a) - $signed(b);
         // TODO: ALU should have simm5 as input
@@ -751,11 +745,11 @@ module branch (
             `VMICRO16_OP_BR_U:  en = 1;
             `VMICRO16_OP_BR_E:  en = (flags[`VMICRO16_SFLAG_Z] == 1);
             `VMICRO16_OP_BR_NE: en = (flags[`VMICRO16_SFLAG_Z] == 0);
-            `VMICRO16_OP_BR_G:  en = (flags[`VMICRO16_SFLAG_Z] == 0) && 
+            `VMICRO16_OP_BR_G:  en = (flags[`VMICRO16_SFLAG_Z] == 0) &&
                                      (flags[`VMICRO16_SFLAG_N] == flags[`VMICRO16_SFLAG_V]);
             `VMICRO16_OP_BR_L:  en = (flags[`VMICRO16_SFLAG_Z] != flags[`VMICRO16_SFLAG_N]);
             `VMICRO16_OP_BR_GE: en = (flags[`VMICRO16_SFLAG_Z] == flags[`VMICRO16_SFLAG_N]);
-            `VMICRO16_OP_BR_LE: en = (flags[`VMICRO16_SFLAG_Z] == 1) || 
+            `VMICRO16_OP_BR_LE: en = (flags[`VMICRO16_SFLAG_Z] == 1) ||
                                      (flags[`VMICRO16_SFLAG_N] != flags[`VMICRO16_SFLAG_V]);
             default:            en = 0;
         endcase
@@ -782,7 +776,7 @@ module vmicro16_core # (
     input  [`DEF_NUM_INT-1:0]             ints,
     input  [`DEF_NUM_INT*`DATA_WIDTH-1:0] ints_data,
     output [`DEF_NUM_INT-1:0]             ints_ack,
-    
+
     // APB master to slave interface (apb_intercon)
     output  [`APB_WIDTH-1:0]    w_PADDR,
     output                      w_PWRITE,
@@ -864,7 +858,7 @@ module vmicro16_core # (
     wire        w_branch_en;
     wire        w_branching   = r_instr_has_br && w_branch_en;
     reg  [3:0]  r_cmp_flags   = 4'h00; // N, Z, C, V
-    
+
     always @(r_cmp_flags)
         $display($time, "\tC%02h:\tALU CMP: %b", CORE_ID, r_cmp_flags);
 
@@ -894,7 +888,7 @@ module vmicro16_core # (
             // Notify fsm to switch to the ints_vector at the last stage
             int_pending <= 1;
         else if (w_intr)
-            // Return to Interrupt instruction called, 
+            // Return to Interrupt instruction called,
             //   so we've finished with the interrupt
             int_pending <= 0;
     `endif
@@ -907,8 +901,8 @@ module vmicro16_core # (
         else if (r_state == STATE_WB) begin
             `ifdef DEF_ENABLE_INT
             if (int_pending) begin
-                $display($time, "\tC%02h: Jumping to ISR: %h", 
-                    CORE_ID, 
+                $display($time, "\tC%02h: Jumping to ISR: %h",
+                    CORE_ID,
                     ints_vector[0 +: `DATA_WIDTH]);
                 // TODO: check bounds
                 // Save state
@@ -918,7 +912,7 @@ module vmicro16_core # (
                 // Jump to ISR
                 r_pc            <= ints_vector[0 +: `DATA_WIDTH];
             end else if (w_intr) begin
-                $display($time, "\tC%02h: Returning from ISR: %h", 
+                $display($time, "\tC%02h: Returning from ISR: %h",
                     CORE_ID, r_pc_saved);
 
                 // Restore state
@@ -965,7 +959,7 @@ module vmicro16_core # (
             end
             `endif
         end
-    
+
 `ifndef DEF_CORE_HAS_INSTR_MEM
     initial w2_PSELx   = 0;
     initial w2_PENABLE = 0;
@@ -990,7 +984,7 @@ module vmicro16_core # (
                     $display("");
                     $display($time, "\tC%02h: PC: %h",    CORE_ID, r_pc);
                     $display($time, "\tC%02h: INSTR: %h", CORE_ID, w_mem_instr_out);
-                    
+
                     r_state <= STATE_R1;
             end
 `else
@@ -1014,7 +1008,7 @@ module vmicro16_core # (
                     $display("");
                     $display($time, "\tC%02h: PC: %h",    CORE_ID, r_pc);
                     $display($time, "\tC%02h: INSTR: %h", CORE_ID, w2_PRDATA);
-                    
+
                     r_state <= STATE_R1;
                 end
             end
@@ -1049,7 +1043,7 @@ module vmicro16_core # (
                 // Pulse req
                 r_mem_scratch_req <= 0;
                 // Wait for MMU to finish
-                if (!r_mem_scratch_busy) 
+                if (!r_mem_scratch_busy)
                     r_state <= STATE_WB;
             end
             else if (r_state == STATE_WB) begin
@@ -1060,7 +1054,7 @@ module vmicro16_core # (
 
                 r_state <= STATE_FE;
             end
-            else if (r_state == STATE_FE) 
+            else if (r_state == STATE_FE)
                 r_state <= STATE_IF;
             else if (r_state == STATE_HALT) begin
                 `ifdef DEF_ENABLE_INT
@@ -1081,11 +1075,11 @@ module vmicro16_core # (
         .USE_INITS      (1),
         .NAME           ("INSTR_MEM")
     ) mem_instr (
-        .clk            (clk), 
-        .reset          (reset), 
-        // port 1       
-        .mem_addr       (r_pc), 
-        .mem_in         (0), 
+        .clk            (clk),
+        .reset          (reset),
+        // port 1
+        .mem_addr       (r_pc),
+        .mem_in         (0),
         .mem_we         (1'b0),  // ROM
         .mem_out        (w_mem_instr_out)
     );
@@ -1097,17 +1091,17 @@ module vmicro16_core # (
         .MEM_DEPTH      (MEM_SCRATCH_DEPTH),
         .CORE_ID        (CORE_ID)
     ) mmu (
-        .clk            (clk), 
-        .reset          (reset), 
+        .clk            (clk),
+        .reset          (reset),
         .req            (r_mem_scratch_req),
         .busy           (r_mem_scratch_busy),
         // interrupts
         .ints_vector    (ints_vector),
         .ints_mask      (ints_mask),
         // port 1
-        .mmu_addr       (r_mem_scratch_addr), 
-        .mmu_in         (r_mem_scratch_in), 
-        .mmu_we         (r_mem_scratch_we), 
+        .mmu_addr       (r_mem_scratch_addr),
+        .mmu_in         (r_mem_scratch_in),
+        .mmu_we         (r_mem_scratch_we),
         .mmu_lwex       (r_instr_has_lwex),
         .mmu_swex       (r_instr_has_swex),
         .mmu_out        (r_mem_scratch_out),
@@ -1146,7 +1140,7 @@ module vmicro16_core # (
         .has_lwex       (r_instr_has_lwex),
         .has_swex       (r_instr_has_swex)
     );
-    
+
     // Software registers
     vmicro16_regs # (
         .CORE_ID    (CORE_ID),

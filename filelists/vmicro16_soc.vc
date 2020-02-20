@@ -1,0 +1,15 @@
+vmicro16/vmicro16.v
+vmicro16/apb_intercon.v
+
+#vmicro16/uart_fifo.v
+vmicro16/uart.v
+vmicro16/apb_uart.v
+vmicro16/uart/apb_uart.v
+
+vmicro16/vmicro16_soc.v
+vmicro16/vmicro16_periph.v
+#vmicro16/vmicro16_periph_sect.v
+
+//vmicro16/test/tb_vmicro16_cpu.v
+vmicro16/test/tb_vmicro16_so2c.v
+

@@ -1,0 +1,454 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wave_config>
+   <wave_state>
+   </wave_state>
+   <db_ref_list>
+      <db_ref path="tb_cluster_behav.wdb" id="1">
+         <top_modules>
+            <top_module name="glbl" />
+            <top_module name="tb_cluster" />
+         </top_modules>
+      </db_ref>
+   </db_ref_list>
+   <zoom_setting>
+      <ZoomStartTime time="677010fs"></ZoomStartTime>
+      <ZoomEndTime time="2264598fs"></ZoomEndTime>
+      <Cursor1Time time="1090000fs"></Cursor1Time>
+   </zoom_setting>
+   <column_width_setting>
+      <NameColumnWidth column_width="225"></NameColumnWidth>
+      <ValueColumnWidth column_width="111"></ValueColumnWidth>
+   </column_width_setting>
+   <WVObjectSize size="9" />
+   <wvobject fp_name="/tb_cluster/clk" type="logic">
+      <obj_property name="ElementShortName">clk</obj_property>
+      <obj_property name="ObjectShortName">clk</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb_cluster/reset" type="logic">
+      <obj_property name="ElementShortName">reset</obj_property>
+      <obj_property name="ObjectShortName">reset</obj_property>
+   </wvobject>
+   <wvobject fp_name="group429" type="group">
+      <obj_property name="label">CL0</obj_property>
+      <obj_property name="DisplayName">label</obj_property>
+      <obj_property name="isExpanded"></obj_property>
+      <wvobject fp_name="group450" type="group">
+         <obj_property name="label">C1</obj_property>
+         <obj_property name="DisplayName">label</obj_property>
+         <obj_property name="isExpanded"></obj_property>
+         <wvobject fp_name="/tb_cluster/\genblk1[0].cluster_inst /\genblk1[1].cpu /halt" type="logic">
+            <obj_property name="ElementShortName">halt</obj_property>
+            <obj_property name="ObjectShortName">halt</obj_property>
+         </wvobject>
+         <wvobject fp_name="/tb_cluster/\genblk1[0].cluster_inst /\genblk1[1].cpu /w_PADDR" type="array">
+            <obj_property name="ElementShortName">w_PADDR[19:0]</obj_property>
+            <obj_property name="ObjectShortName">w_PADDR[19:0]</obj_property>
+         </wvobject>
+         <wvobject fp_name="/tb_cluster/\genblk1[0].cluster_inst /\genblk1[1].cpu /w_PWRITE" type="logic">
+            <obj_property name="ElementShortName">w_PWRITE</obj_property>
+            <obj_property name="ObjectShortName">w_PWRITE</obj_property>
+         </wvobject>
+         <wvobject fp_name="/tb_cluster/\genblk1[0].cluster_inst /\genblk1[1].cpu /w_PSELx" type="logic">
+            <obj_property name="ElementShortName">w_PSELx</obj_property>
+            <obj_property name="ObjectShortName">w_PSELx</obj_property>
+         </wvobject>
+         <wvobject fp_name="/tb_cluster/\genblk1[0].cluster_inst /\genblk1[1].cpu /w_PENABLE" type="logic">
+            <obj_property name="ElementShortName">w_PENABLE</obj_property>
+            <obj_property name="ObjectShortName">w_PENABLE</obj_property>
+         </wvobject>
+         <wvobject fp_name="/tb_cluster/\genblk1[0].cluster_inst /\genblk1[1].cpu /w_PWDATA" type="array">
+            <obj_property name="ElementShortName">w_PWDATA[15:0]</obj_property>
+            <obj_property name="ObjectShortName">w_PWDATA[15:0]</obj_property>
+         </wvobject>
+         <wvobject fp_name="/tb_cluster/\genblk1[0].cluster_inst /\genblk1[1].cpu /w_PRDATA" type="array">
+            <obj_property name="ElementShortName">w_PRDATA[15:0]</obj_property>
+            <obj_property name="ObjectShortName">w_PRDATA[15:0]</obj_property>
+         </wvobject>
+      </wvobject>
+      <wvobject fp_name="group446" type="group">
+         <obj_property name="label">C0</obj_property>
+         <obj_property name="DisplayName">label</obj_property>
+         <obj_property name="isExpanded"></obj_property>
+         <wvobject fp_name="/tb_cluster/\genblk1[0].cluster_inst /\genblk1[0].cpu /halt" type="logic">
+            <obj_property name="ElementShortName">halt</obj_property>
+            <obj_property name="ObjectShortName">halt</obj_property>
+         </wvobject>
+         <wvobject fp_name="/tb_cluster/\genblk1[0].cluster_inst /\genblk1[0].cpu /r_pc" type="array">
+            <obj_property name="ElementShortName">r_pc[15:0]</obj_property>
+            <obj_property name="ObjectShortName">r_pc[15:0]</obj_property>
+         </wvobject>
+         <wvobject fp_name="/tb_cluster/\genblk1[0].cluster_inst /\genblk1[0].cpu /r_instr" type="array">
+            <obj_property name="ElementShortName">r_instr[15:0]</obj_property>
+            <obj_property name="ObjectShortName">r_instr[15:0]</obj_property>
+         </wvobject>
+         <wvobject fp_name="/tb_cluster/\genblk1[0].cluster_inst /\genblk1[0].cpu /regs/regs" type="array">
+            <obj_property name="ElementShortName">regs[0:7][15:0]</obj_property>
+            <obj_property name="ObjectShortName">regs[0:7][15:0]</obj_property>
+         </wvobject>
+         <wvobject fp_name="/tb_cluster/\genblk1[0].cluster_inst /\genblk1[0].cpu /mmu/mmu_addr" type="array">
+            <obj_property name="ElementShortName">mmu_addr[15:0]</obj_property>
+            <obj_property name="ObjectShortName">mmu_addr[15:0]</obj_property>
+         </wvobject>
+         <wvobject fp_name="/tb_cluster/\genblk1[0].cluster_inst /\genblk1[0].cpu /mmu/mmu_in" type="array">
+            <obj_property name="ElementShortName">mmu_in[15:0]</obj_property>
+            <obj_property name="ObjectShortName">mmu_in[15:0]</obj_property>
+         </wvobject>
+         <wvobject fp_name="group487" type="group">
+            <obj_property name="label">APB</obj_property>
+            <obj_property name="DisplayName">label</obj_property>
+            <obj_property name="isExpanded"></obj_property>
+            <wvobject fp_name="/tb_cluster/\genblk1[0].cluster_inst /\genblk1[0].cpu /w_PADDR" type="array">
+               <obj_property name="ElementShortName">w_PADDR[19:0]</obj_property>
+               <obj_property name="ObjectShortName">w_PADDR[19:0]</obj_property>
+            </wvobject>
+            <wvobject fp_name="/tb_cluster/\genblk1[0].cluster_inst /\genblk1[0].cpu /w_PWRITE" type="logic">
+               <obj_property name="ElementShortName">w_PWRITE</obj_property>
+               <obj_property name="ObjectShortName">w_PWRITE</obj_property>
+            </wvobject>
+            <wvobject fp_name="/tb_cluster/\genblk1[0].cluster_inst /\genblk1[0].cpu /w_PSELx" type="logic">
+               <obj_property name="ElementShortName">w_PSELx</obj_property>
+               <obj_property name="ObjectShortName">w_PSELx</obj_property>
+            </wvobject>
+            <wvobject fp_name="/tb_cluster/\genblk1[0].cluster_inst /\genblk1[0].cpu /w_PENABLE" type="logic">
+               <obj_property name="ElementShortName">w_PENABLE</obj_property>
+               <obj_property name="ObjectShortName">w_PENABLE</obj_property>
+            </wvobject>
+            <wvobject fp_name="/tb_cluster/\genblk1[0].cluster_inst /\genblk1[0].cpu /w_PWDATA" type="array">
+               <obj_property name="ElementShortName">w_PWDATA[15:0]</obj_property>
+               <obj_property name="ObjectShortName">w_PWDATA[15:0]</obj_property>
+            </wvobject>
+            <wvobject fp_name="/tb_cluster/\genblk1[0].cluster_inst /\genblk1[0].cpu /w_PRDATA" type="array">
+               <obj_property name="ElementShortName">w_PRDATA[15:0]</obj_property>
+               <obj_property name="ObjectShortName">w_PRDATA[15:0]</obj_property>
+            </wvobject>
+            <wvobject fp_name="/tb_cluster/\genblk1[0].cluster_inst /\genblk1[0].cpu /w_PREADY" type="logic">
+               <obj_property name="ElementShortName">w_PREADY</obj_property>
+               <obj_property name="ObjectShortName">w_PREADY</obj_property>
+            </wvobject>
+         </wvobject>
+         <wvobject fp_name="/tb_cluster/\genblk1[0].cluster_inst /\genblk1[1].cpu /mmu/req" type="logic">
+            <obj_property name="ElementShortName">req</obj_property>
+            <obj_property name="ObjectShortName">req</obj_property>
+         </wvobject>
+         <wvobject fp_name="/tb_cluster/\genblk1[0].cluster_inst /\genblk1[1].cpu /mmu/is_local_addr" type="logic">
+            <obj_property name="ElementShortName">is_local_addr</obj_property>
+            <obj_property name="ObjectShortName">is_local_addr</obj_property>
+         </wvobject>
+         <wvobject fp_name="/tb_cluster/\genblk1[0].cluster_inst /\genblk1[1].cpu /mmu/tim0_en" type="logic">
+            <obj_property name="ElementShortName">tim0_en</obj_property>
+            <obj_property name="ObjectShortName">tim0_en</obj_property>
+         </wvobject>
+         <wvobject fp_name="/tb_cluster/\genblk1[0].cluster_inst /\genblk1[1].cpu /mmu/sreg_en" type="logic">
+            <obj_property name="ElementShortName">sreg_en</obj_property>
+            <obj_property name="ObjectShortName">sreg_en</obj_property>
+         </wvobject>
+         <wvobject fp_name="/tb_cluster/\genblk1[0].cluster_inst /\genblk1[1].cpu /mmu/intv_en" type="logic">
+            <obj_property name="ElementShortName">intv_en</obj_property>
+            <obj_property name="ObjectShortName">intv_en</obj_property>
+         </wvobject>
+         <wvobject fp_name="/tb_cluster/\genblk1[0].cluster_inst /\genblk1[1].cpu /mmu/intm_en" type="logic">
+            <obj_property name="ElementShortName">intm_en</obj_property>
+            <obj_property name="ObjectShortName">intm_en</obj_property>
+         </wvobject>
+         <wvobject fp_name="/tb_cluster/\genblk1[0].cluster_inst /\genblk1[1].cpu /mmu/apb_en" type="logic">
+            <obj_property name="ElementShortName">apb_en</obj_property>
+            <obj_property name="ObjectShortName">apb_en</obj_property>
+         </wvobject>
+      </wvobject>
+   </wvobject>
+   <wvobject fp_name="group535" type="group">
+      <obj_property name="label">ic_cluster</obj_property>
+      <obj_property name="DisplayName">label</obj_property>
+      <obj_property name="isExpanded"></obj_property>
+      <wvobject fp_name="/tb_cluster/\genblk1[0].cluster_inst /ic_dmem/S_PADDR" type="array">
+         <obj_property name="ElementShortName">S_PADDR[63:0]</obj_property>
+         <obj_property name="ObjectShortName">S_PADDR[63:0]</obj_property>
+      </wvobject>
+      <wvobject fp_name="/tb_cluster/\genblk1[0].cluster_inst /ic_dmem/S_PWRITE" type="array">
+         <obj_property name="ElementShortName">S_PWRITE[3:0]</obj_property>
+         <obj_property name="ObjectShortName">S_PWRITE[3:0]</obj_property>
+         <obj_property name="Radix">BINARYRADIX</obj_property>
+      </wvobject>
+      <wvobject fp_name="/tb_cluster/\genblk1[0].cluster_inst /ic_dmem/S_PSELx" type="array">
+         <obj_property name="ElementShortName">S_PSELx[3:0]</obj_property>
+         <obj_property name="ObjectShortName">S_PSELx[3:0]</obj_property>
+         <obj_property name="Radix">BINARYRADIX</obj_property>
+      </wvobject>
+      <wvobject fp_name="/tb_cluster/\genblk1[0].cluster_inst /ic_dmem/S_PENABLE" type="array">
+         <obj_property name="ElementShortName">S_PENABLE[3:0]</obj_property>
+         <obj_property name="ObjectShortName">S_PENABLE[3:0]</obj_property>
+         <obj_property name="Radix">BINARYRADIX</obj_property>
+      </wvobject>
+      <wvobject fp_name="/tb_cluster/\genblk1[0].cluster_inst /ic_dmem/S_PWDATA" type="array">
+         <obj_property name="ElementShortName">S_PWDATA[63:0]</obj_property>
+         <obj_property name="ObjectShortName">S_PWDATA[63:0]</obj_property>
+      </wvobject>
+      <wvobject fp_name="/tb_cluster/\genblk1[0].cluster_inst /ic_dmem/S_PRDATA" type="array">
+         <obj_property name="ElementShortName">S_PRDATA[63:0]</obj_property>
+         <obj_property name="ObjectShortName">S_PRDATA[63:0]</obj_property>
+      </wvobject>
+      <wvobject fp_name="/tb_cluster/\genblk1[0].cluster_inst /ic_dmem/S_PREADY" type="array">
+         <obj_property name="ElementShortName">S_PREADY[3:0]</obj_property>
+         <obj_property name="ObjectShortName">S_PREADY[3:0]</obj_property>
+         <obj_property name="Radix">BINARYRADIX</obj_property>
+      </wvobject>
+      <wvobject fp_name="/tb_cluster/\genblk1[0].cluster_inst /ic_dmem/selected" type="logic">
+         <obj_property name="ElementShortName">selected</obj_property>
+         <obj_property name="ObjectShortName">selected</obj_property>
+      </wvobject>
+      <wvobject fp_name="/tb_cluster/\genblk1[0].cluster_inst /ic_dmem/grants" type="array">
+         <obj_property name="ElementShortName">grants[3:0]</obj_property>
+         <obj_property name="ObjectShortName">grants[3:0]</obj_property>
+      </wvobject>
+      <wvobject fp_name="/tb_cluster/\genblk1[0].cluster_inst /ic_dmem/granted_int" type="array">
+         <obj_property name="ElementShortName">granted_int[1:0]</obj_property>
+         <obj_property name="ObjectShortName">granted_int[1:0]</obj_property>
+      </wvobject>
+      <wvobject fp_name="/tb_cluster/\genblk1[0].cluster_inst /ic_dmem/arbiter/current_grant_active" type="array">
+         <obj_property name="ElementShortName">current_grant_active[3:0]</obj_property>
+         <obj_property name="ObjectShortName">current_grant_active[3:0]</obj_property>
+      </wvobject>
+      <wvobject fp_name="/tb_cluster/\genblk1[0].cluster_inst /ic_dmem/arbiter/granted_finished" type="logic">
+         <obj_property name="ElementShortName">granted_finished</obj_property>
+         <obj_property name="ObjectShortName">granted_finished</obj_property>
+      </wvobject>
+   </wvobject>
+   <wvobject fp_name="group589" type="group">
+      <obj_property name="label">ic_cluster_output</obj_property>
+      <obj_property name="DisplayName">label</obj_property>
+      <obj_property name="isExpanded"></obj_property>
+      <wvobject fp_name="/tb_cluster/\genblk1[0].cluster_inst /ic_dmem/M_PADDR" type="array">
+         <obj_property name="ElementShortName">M_PADDR[15:0]</obj_property>
+         <obj_property name="ObjectShortName">M_PADDR[15:0]</obj_property>
+      </wvobject>
+      <wvobject fp_name="/tb_cluster/\genblk1[0].cluster_inst /ic_dmem/M_PWRITE" type="logic">
+         <obj_property name="ElementShortName">M_PWRITE</obj_property>
+         <obj_property name="ObjectShortName">M_PWRITE</obj_property>
+      </wvobject>
+      <wvobject fp_name="/tb_cluster/\genblk1[0].cluster_inst /ic_dmem/M_PSELx" type="array">
+         <obj_property name="ElementShortName">M_PSELx[1:0]</obj_property>
+         <obj_property name="ObjectShortName">M_PSELx[1:0]</obj_property>
+         <obj_property name="Radix">BINARYRADIX</obj_property>
+      </wvobject>
+      <wvobject fp_name="/tb_cluster/\genblk1[0].cluster_inst /ic_dmem/M_PENABLE" type="logic">
+         <obj_property name="ElementShortName">M_PENABLE</obj_property>
+         <obj_property name="ObjectShortName">M_PENABLE</obj_property>
+      </wvobject>
+      <wvobject fp_name="/tb_cluster/\genblk1[0].cluster_inst /ic_dmem/M_PWDATA" type="array">
+         <obj_property name="ElementShortName">M_PWDATA[15:0]</obj_property>
+         <obj_property name="ObjectShortName">M_PWDATA[15:0]</obj_property>
+      </wvobject>
+      <wvobject fp_name="/tb_cluster/\genblk1[0].cluster_inst /ic_dmem/M_PRDATA" type="array">
+         <obj_property name="ElementShortName">M_PRDATA[31:0]</obj_property>
+         <obj_property name="ObjectShortName">M_PRDATA[31:0]</obj_property>
+      </wvobject>
+      <wvobject fp_name="/tb_cluster/\genblk1[0].cluster_inst /ic_dmem/M_PREADY" type="array">
+         <obj_property name="ElementShortName">M_PREADY[1:0]</obj_property>
+         <obj_property name="ObjectShortName">M_PREADY[1:0]</obj_property>
+         <obj_property name="Radix">BINARYRADIX</obj_property>
+      </wvobject>
+   </wvobject>
+   <wvobject fp_name="group545" type="group">
+      <obj_property name="label">cluster_output</obj_property>
+      <obj_property name="DisplayName">label</obj_property>
+      <obj_property name="isExpanded"></obj_property>
+      <wvobject fp_name="/tb_cluster/\genblk1[0].cluster_inst /M_PADDR" type="array">
+         <obj_property name="ElementShortName">M_PADDR[15:0]</obj_property>
+         <obj_property name="ObjectShortName">M_PADDR[15:0]</obj_property>
+      </wvobject>
+      <wvobject fp_name="/tb_cluster/\genblk1[0].cluster_inst /M_PWRITE" type="array">
+         <obj_property name="ElementShortName">M_PWRITE[0:0]</obj_property>
+         <obj_property name="ObjectShortName">M_PWRITE[0:0]</obj_property>
+      </wvobject>
+      <wvobject fp_name="/tb_cluster/\genblk1[0].cluster_inst /M_PSELx" type="array">
+         <obj_property name="ElementShortName">M_PSELx[0:0]</obj_property>
+         <obj_property name="ObjectShortName">M_PSELx[0:0]</obj_property>
+      </wvobject>
+      <wvobject fp_name="/tb_cluster/\genblk1[0].cluster_inst /M_PENABLE" type="array">
+         <obj_property name="ElementShortName">M_PENABLE[0:0]</obj_property>
+         <obj_property name="ObjectShortName">M_PENABLE[0:0]</obj_property>
+      </wvobject>
+      <wvobject fp_name="/tb_cluster/\genblk1[0].cluster_inst /M_PWDATA" type="array">
+         <obj_property name="ElementShortName">M_PWDATA[15:0]</obj_property>
+         <obj_property name="ObjectShortName">M_PWDATA[15:0]</obj_property>
+      </wvobject>
+      <wvobject fp_name="/tb_cluster/\genblk1[0].cluster_inst /M_PRDATA" type="array">
+         <obj_property name="ElementShortName">M_PRDATA[15:0]</obj_property>
+         <obj_property name="ObjectShortName">M_PRDATA[15:0]</obj_property>
+      </wvobject>
+      <wvobject fp_name="/tb_cluster/\genblk1[0].cluster_inst /M_PREADY" type="array">
+         <obj_property name="ElementShortName">M_PREADY[0:0]</obj_property>
+         <obj_property name="ObjectShortName">M_PREADY[0:0]</obj_property>
+      </wvobject>
+   </wvobject>
+   <wvobject fp_name="group599" type="group">
+      <obj_property name="label">MAIN_IC_DRIVERS</obj_property>
+      <obj_property name="DisplayName">label</obj_property>
+      <obj_property name="isExpanded"></obj_property>
+      <wvobject fp_name="/tb_cluster/main_ic/S_PADDR" type="array">
+         <obj_property name="ElementShortName">S_PADDR[15:0]</obj_property>
+         <obj_property name="ObjectShortName">S_PADDR[15:0]</obj_property>
+      </wvobject>
+      <wvobject fp_name="/tb_cluster/main_ic/S_PWRITE" type="array">
+         <obj_property name="ElementShortName">S_PWRITE[0:0]</obj_property>
+         <obj_property name="ObjectShortName">S_PWRITE[0:0]</obj_property>
+         <obj_property name="Radix">BINARYRADIX</obj_property>
+      </wvobject>
+      <wvobject fp_name="/tb_cluster/main_ic/S_PSELx" type="array">
+         <obj_property name="ElementShortName">S_PSELx[0:0]</obj_property>
+         <obj_property name="ObjectShortName">S_PSELx[0:0]</obj_property>
+         <obj_property name="Radix">BINARYRADIX</obj_property>
+      </wvobject>
+      <wvobject fp_name="/tb_cluster/main_ic/S_PENABLE" type="array">
+         <obj_property name="ElementShortName">S_PENABLE[0:0]</obj_property>
+         <obj_property name="ObjectShortName">S_PENABLE[0:0]</obj_property>
+      </wvobject>
+      <wvobject fp_name="/tb_cluster/main_ic/S_PWDATA" type="array">
+         <obj_property name="ElementShortName">S_PWDATA[15:0]</obj_property>
+         <obj_property name="ObjectShortName">S_PWDATA[15:0]</obj_property>
+      </wvobject>
+      <wvobject fp_name="/tb_cluster/main_ic/S_PRDATA" type="array">
+         <obj_property name="ElementShortName">S_PRDATA[15:0]</obj_property>
+         <obj_property name="ObjectShortName">S_PRDATA[15:0]</obj_property>
+      </wvobject>
+      <wvobject fp_name="/tb_cluster/main_ic/S_PREADY" type="array">
+         <obj_property name="ElementShortName">S_PREADY[0:0]</obj_property>
+         <obj_property name="ObjectShortName">S_PREADY[0:0]</obj_property>
+         <obj_property name="Radix">BINARYRADIX</obj_property>
+      </wvobject>
+      <wvobject fp_name="/tb_cluster/\genblk1[0].cluster_inst /ic_dmem_S_PADDR" type="array">
+         <obj_property name="ElementShortName">ic_dmem_S_PADDR[63:0]</obj_property>
+         <obj_property name="ObjectShortName">ic_dmem_S_PADDR[63:0]</obj_property>
+      </wvobject>
+      <wvobject fp_name="/tb_cluster/\genblk1[0].cluster_inst /ic_dmem_S_PWRITE" type="array">
+         <obj_property name="ElementShortName">ic_dmem_S_PWRITE[3:0]</obj_property>
+         <obj_property name="ObjectShortName">ic_dmem_S_PWRITE[3:0]</obj_property>
+      </wvobject>
+      <wvobject fp_name="/tb_cluster/\genblk1[0].cluster_inst /ic_dmem_S_PSELx" type="array">
+         <obj_property name="ElementShortName">ic_dmem_S_PSELx[3:0]</obj_property>
+         <obj_property name="ObjectShortName">ic_dmem_S_PSELx[3:0]</obj_property>
+      </wvobject>
+      <wvobject fp_name="/tb_cluster/\genblk1[0].cluster_inst /ic_dmem_S_PENABLE" type="array">
+         <obj_property name="ElementShortName">ic_dmem_S_PENABLE[3:0]</obj_property>
+         <obj_property name="ObjectShortName">ic_dmem_S_PENABLE[3:0]</obj_property>
+      </wvobject>
+      <wvobject fp_name="/tb_cluster/\genblk1[0].cluster_inst /ic_dmem_S_PWDATA" type="array">
+         <obj_property name="ElementShortName">ic_dmem_S_PWDATA[63:0]</obj_property>
+         <obj_property name="ObjectShortName">ic_dmem_S_PWDATA[63:0]</obj_property>
+      </wvobject>
+      <wvobject fp_name="/tb_cluster/\genblk1[0].cluster_inst /ic_dmem_S_PRDATA" type="array">
+         <obj_property name="ElementShortName">ic_dmem_S_PRDATA[63:0]</obj_property>
+         <obj_property name="ObjectShortName">ic_dmem_S_PRDATA[63:0]</obj_property>
+      </wvobject>
+      <wvobject fp_name="/tb_cluster/\genblk1[0].cluster_inst /ic_dmem_S_PREADY" type="array">
+         <obj_property name="ElementShortName">ic_dmem_S_PREADY[3:0]</obj_property>
+         <obj_property name="ObjectShortName">ic_dmem_S_PREADY[3:0]</obj_property>
+         <obj_property name="isExpanded"></obj_property>
+      </wvobject>
+      <wvobject fp_name="/tb_cluster/main_ic/arbiter/reqs" type="array">
+         <obj_property name="ElementShortName">reqs[0:0]</obj_property>
+         <obj_property name="ObjectShortName">reqs[0:0]</obj_property>
+         <obj_property name="Radix">BINARYRADIX</obj_property>
+      </wvobject>
+      <wvobject fp_name="/tb_cluster/main_ic/arbiter/grants" type="array">
+         <obj_property name="ElementShortName">grants[0:0]</obj_property>
+         <obj_property name="ObjectShortName">grants[0:0]</obj_property>
+         <obj_property name="Radix">BINARYRADIX</obj_property>
+      </wvobject>
+      <wvobject fp_name="/tb_cluster/main_ic/arbiter/current_grant_active" type="array">
+         <obj_property name="ElementShortName">current_grant_active[0:0]</obj_property>
+         <obj_property name="ObjectShortName">current_grant_active[0:0]</obj_property>
+      </wvobject>
+      <wvobject fp_name="/tb_cluster/main_ic/arbiter/granted_finished" type="logic">
+         <obj_property name="ElementShortName">granted_finished</obj_property>
+         <obj_property name="ObjectShortName">granted_finished</obj_property>
+      </wvobject>
+      <wvobject fp_name="/tb_cluster/main_ic/a_M_PREADY" type="logic">
+         <obj_property name="ElementShortName">a_M_PREADY</obj_property>
+         <obj_property name="ObjectShortName">a_M_PREADY</obj_property>
+      </wvobject>
+   </wvobject>
+   <wvobject fp_name="group613" type="group">
+      <obj_property name="label">MAIN_IC_PER</obj_property>
+      <obj_property name="DisplayName">label</obj_property>
+      <obj_property name="isExpanded"></obj_property>
+      <wvobject fp_name="group614" type="group">
+         <obj_property name="label">PERI_SECT</obj_property>
+         <obj_property name="DisplayName">label</obj_property>
+         <obj_property name="isExpanded"></obj_property>
+         <wvobject fp_name="/tb_cluster/periphs_sub_ic/S_PSELx" type="array">
+            <obj_property name="ElementShortName">S_PSELx[0:0]</obj_property>
+            <obj_property name="ObjectShortName">S_PSELx[0:0]</obj_property>
+         </wvobject>
+         <wvobject fp_name="/tb_cluster/periphs_sub_ic/S_PENABLE" type="array">
+            <obj_property name="ElementShortName">S_PENABLE[0:0]</obj_property>
+            <obj_property name="ObjectShortName">S_PENABLE[0:0]</obj_property>
+         </wvobject>
+         <wvobject fp_name="/tb_cluster/periphs_sub_ic/S_PREADY" type="array">
+            <obj_property name="ElementShortName">S_PREADY[0:0]</obj_property>
+            <obj_property name="ObjectShortName">S_PREADY[0:0]</obj_property>
+         </wvobject>
+         <wvobject fp_name="/tb_cluster/periphs_sub_ic/ic_pmem_M_PSELx" type="array">
+            <obj_property name="ElementShortName">ic_pmem_M_PSELx[7:0]</obj_property>
+            <obj_property name="ObjectShortName">ic_pmem_M_PSELx[7:0]</obj_property>
+         </wvobject>
+         <wvobject fp_name="/tb_cluster/periphs_sub_ic/ic_pmem_M_PENABLE" type="logic">
+            <obj_property name="ElementShortName">ic_pmem_M_PENABLE</obj_property>
+            <obj_property name="ObjectShortName">ic_pmem_M_PENABLE</obj_property>
+         </wvobject>
+         <wvobject fp_name="/tb_cluster/periphs_sub_ic/ic_pmem_M_PREADY" type="array">
+            <obj_property name="ElementShortName">ic_pmem_M_PREADY[7:0]</obj_property>
+            <obj_property name="ObjectShortName">ic_pmem_M_PREADY[7:0]</obj_property>
+         </wvobject>
+         <wvobject fp_name="/tb_cluster/periphs_sub_ic/gpio0" type="array">
+            <obj_property name="ElementShortName">gpio0[7:0]</obj_property>
+            <obj_property name="ObjectShortName">gpio0[7:0]</obj_property>
+         </wvobject>
+         <wvobject fp_name="/tb_cluster/periphs_sub_ic/gpio0_apb/S_PREADY" type="logic">
+            <obj_property name="ElementShortName">S_PREADY</obj_property>
+            <obj_property name="ObjectShortName">S_PREADY</obj_property>
+         </wvobject>
+         <wvobject fp_name="/tb_cluster/periphs_sub_ic/gpio1" type="array">
+            <obj_property name="ElementShortName">gpio1[7:0]</obj_property>
+            <obj_property name="ObjectShortName">gpio1[7:0]</obj_property>
+         </wvobject>
+         <wvobject fp_name="/tb_cluster/periphs_sub_ic/gpio2" type="array">
+            <obj_property name="ElementShortName">gpio2[7:0]</obj_property>
+            <obj_property name="ObjectShortName">gpio2[7:0]</obj_property>
+         </wvobject>
+      </wvobject>
+   </wvobject>
+   <wvobject fp_name="group641" type="group">
+      <obj_property name="label">MAIN_IC_RETURN</obj_property>
+      <obj_property name="DisplayName">label</obj_property>
+      <obj_property name="isExpanded"></obj_property>
+      <wvobject fp_name="/tb_cluster/main_ic/M_PADDR" type="array">
+         <obj_property name="ElementShortName">M_PADDR[15:0]</obj_property>
+         <obj_property name="ObjectShortName">M_PADDR[15:0]</obj_property>
+      </wvobject>
+      <wvobject fp_name="/tb_cluster/main_ic/M_PWRITE" type="logic">
+         <obj_property name="ElementShortName">M_PWRITE</obj_property>
+         <obj_property name="ObjectShortName">M_PWRITE</obj_property>
+      </wvobject>
+      <wvobject fp_name="/tb_cluster/main_ic/M_PSELx" type="array">
+         <obj_property name="ElementShortName">M_PSELx[1:0]</obj_property>
+         <obj_property name="ObjectShortName">M_PSELx[1:0]</obj_property>
+      </wvobject>
+      <wvobject fp_name="/tb_cluster/main_ic/M_PENABLE" type="logic">
+         <obj_property name="ElementShortName">M_PENABLE</obj_property>
+         <obj_property name="ObjectShortName">M_PENABLE</obj_property>
+      </wvobject>
+      <wvobject fp_name="/tb_cluster/main_ic/M_PWDATA" type="array">
+         <obj_property name="ElementShortName">M_PWDATA[15:0]</obj_property>
+         <obj_property name="ObjectShortName">M_PWDATA[15:0]</obj_property>
+      </wvobject>
+      <wvobject fp_name="/tb_cluster/main_ic/M_PRDATA" type="array">
+         <obj_property name="ElementShortName">M_PRDATA[31:0]</obj_property>
+         <obj_property name="ObjectShortName">M_PRDATA[31:0]</obj_property>
+      </wvobject>
+      <wvobject fp_name="/tb_cluster/main_ic/M_PREADY" type="array">
+         <obj_property name="ElementShortName">M_PREADY[1:0]</obj_property>
+         <obj_property name="ObjectShortName">M_PREADY[1:0]</obj_property>
+      </wvobject>
+   </wvobject>
+</wave_config>
