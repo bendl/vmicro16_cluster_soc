@@ -8,6 +8,7 @@
 
 // Include Vmicro16 ISA containing definitions for the bits
 `include "vmicro16_isa.v"
+`include "vmicro16_soc_config.v"
 
 `include "clog2.v"
 `include "formal.v"

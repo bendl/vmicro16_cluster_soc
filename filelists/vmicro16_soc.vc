@@ -1,15 +1,14 @@
-vmicro16/vmicro16.v
-vmicro16/apb_intercon.v
 
-#vmicro16/uart_fifo.v
-vmicro16/uart.v
-vmicro16/apb_uart.v
-vmicro16/uart/apb_uart.v
+../verilog/vmicro16.v
+../verilog/apb_intercon.v
 
-vmicro16/vmicro16_soc.v
-vmicro16/vmicro16_periph.v
-#vmicro16/vmicro16_periph_sect.v
+../verilog/uart/uart.v
+../verilog/uart/apb_uart.v
+../verilog/uart/apb_uart.v
 
-//vmicro16/test/tb_vmicro16_cpu.v
-vmicro16/test/tb_vmicro16_so2c.v
+../verilog/vmicro16_soc.v
+../verilog/vmicro16_periph.v
+../verilog/vmicro16_periph_sect.v
+
+../verilog/test/tb_vmicro16_soc.v
 

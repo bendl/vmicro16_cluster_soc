@@ -12,13 +12,13 @@ module apb_uart_tx # (
 
     // APB Slave to master interface
     input  [1:0]                    S_PADDR,
-    // S_PADDR[0] = write port, 
+    // S_PADDR[0] = write port,
     // S_PADDR[1] = read  port
     input                           S_PWRITE,
     input                           S_PSELx,
     input                           S_PENABLE,
     input  [BUS_WIDTH-1:0]          S_PWDATA,
-    
+
     output [BUS_WIDTH-1:0]      S_PRDATA,
     output reg                  S_PREADY,
 
@@ -37,7 +37,7 @@ module apb_uart_tx # (
     wire [7:0]  uart_rx_dout;
     wire        uart_tx_fifo_full;
     reg         uart_rx_rdy_clear;
-    
+
     assign S_PRDATA = (apb_sel) ? 16'hAAAA : 16'h0000;
 
     always @(*)
@@ -71,7 +71,7 @@ module apb_uart_tx # (
         //.rx_fifo_empty   (uart_rx_fifo_empty),
         //.rx_byte         (uart_rx_byte[7:0]),
         //.irq             (uart_irq),
-        
+
         // transmitter
         .tx              (tx_wire),
         .busy            (uart_tx_busy),
@@ -81,3 +81,4 @@ module apb_uart_tx # (
     );
 
 endmodule
+

@@ -1,6 +1,3 @@
-// Vmicro16 multi-core instruction set
-`include "vmicro16_soc_config.v"
-
 // TODO: Remove NOP by making a register write/read always 0
 `define VMICRO16_OP_SPCL         5'b00000
 `define VMICRO16_OP_LW           5'b00001
@@ -82,7 +79,7 @@
 `define VMICRO16_ALU_ARITH_UADDI 5'h1b
 `define VMICRO16_ALU_ARITH_SSUBI 5'h1c
 `define VMICRO16_ALU_BR          5'h1d
-`ifdef DEF_ALU_HW_MULT
+
 `define VMICRO16_ALU_MULT        5'h1e
-`endif
+
 `define VMICRO16_ALU_BAD         5'h1f

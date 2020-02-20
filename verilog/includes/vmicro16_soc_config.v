@@ -3,8 +3,6 @@
 `ifndef VMICRO16_SOC_CONFIG_H
 `define VMICRO16_SOC_CONFIG_H
 
-`include "clog2.v"
-
 `define FORMAL
 
 
