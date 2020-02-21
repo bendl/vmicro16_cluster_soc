@@ -63,8 +63,8 @@ module vmicro16_cluster #
     .DATA_WIDTH   (DATA_WIDTH),
     .MASTER_PORTS (NCORES),
     .SLAVE_PORTS  (2), // IC_DMEM and cache
-    .ADDR_MSB     (`IC_CLUSTER_DEC_MSB),
-    .ADDR_LSB     (`IC_CLUSTER_DEC_LSB)
+    .ADDR_MSB     (15),
+    .ADDR_LSB     (15)
   ) ic_dmem (
     .clk          (clk),
     .reset        (reset),
@@ -87,23 +87,23 @@ module vmicro16_cluster #
   );
 
   // register apb test peripheral
-  vmicro16_bram_apb # (
-    .BUS_WIDTH  (BUS_WIDTH),
-    .DATA_WIDTH (DATA_WIDTH),
-    .NAME       ("cache"),
-    .MEM_DEPTH  (64)
-  ) cache_cluster (
-    .clk        (clk),
-    .reset      (reset),
-    // apb slave to master interface
-    .S_PADDR    (ic_dmem_M_PADDR),
-    .S_PWRITE   (ic_dmem_M_PWRITE),
-    .S_PSELx    (ic_dmem_M_PSELx[IC_DMEM_PSEL_CACHE]),
-    .S_PENABLE  (ic_dmem_M_PENABLE),
-    .S_PWDATA   (ic_dmem_M_PWDATA),
-    .S_PRDATA   (ic_dmem_M_PRDATA[IC_DMEM_PSEL_CACHE*DATA_WIDTH +: DATA_WIDTH]),
-    .S_PREADY   (ic_dmem_M_PREADY[IC_DMEM_PSEL_CACHE])
-  );
+  //vmicro16_bram_apb # (
+  //  .BUS_WIDTH  (BUS_WIDTH),
+  //  .DATA_WIDTH (DATA_WIDTH),
+  //  .NAME       ("cache"),
+  //  .MEM_DEPTH  (64)
+  //) cache_cluster (
+  //  .clk        (clk),
+  //  .reset      (reset),
+  //  // apb slave to master interface
+  //  .S_PADDR    (ic_dmem_M_PADDR),
+  //  .S_PWRITE   (ic_dmem_M_PWRITE),
+  //  .S_PSELx    (ic_dmem_M_PSELx[IC_DMEM_PSEL_CACHE]),
+  //  .S_PENABLE  (ic_dmem_M_PENABLE),
+  //  .S_PWDATA   (ic_dmem_M_PWDATA),
+  //  .S_PRDATA   (ic_dmem_M_PRDATA[IC_DMEM_PSEL_CACHE*DATA_WIDTH +: DATA_WIDTH]),
+  //  .S_PREADY   (ic_dmem_M_PREADY[IC_DMEM_PSEL_CACHE])
+  //);
 
   genvar c;
   generate
@@ -135,7 +135,7 @@ module vmicro16_cluster #
         //.w2_PSELx   (ic_imem_W_PSELx   [i]                           ),
         //.w2_PENABLE (ic_imem_W_PENABLE [i]                           ),
         //.w2_PWDATA  (0),
-        //.w2_PRDATA  (ic_imem_W_PRDATA  [`DATA_WIDTH*i +: `DATA_WIDTH]),
+        //.w2_PRDATA  (ic_imem_W_PRDATA  [DATA_WIDTH*i +: DATA_WIDTH]),
         //.w2_PREADY  (ic_imem_W_PREADY  [i]                           )
       );
     end

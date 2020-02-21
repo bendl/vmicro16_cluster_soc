@@ -58,10 +58,10 @@ module apb_uart_tx # (
             $display($time, "\t\tUART0 <= %h", S_PWDATA[7:0]);
 
     wire uart_tx_transmit_en = apb_we && (!uart_tx_fifo_full);
-    uart_fifo # (
+    uart_with_fifo # (
         .DATA_WIDTH (DATA_WIDTH),
         .ADDR_EXP   (ADDR_EXP)
-    ) uart_fifo(
+    ) inst_uart_fifo(
         .clk             (clk),
         .rst             (reset),
 

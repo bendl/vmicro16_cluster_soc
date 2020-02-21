@@ -9,7 +9,7 @@
 // Status          : Unknown, Use with caution!
 
 
-module uart_fifo # (
+module uart_with_fifo # (
    parameter ADDR_EXP   = 5,
    parameter DATA_WIDTH = 8
 ) (/*AUTOARG*/
@@ -178,7 +178,7 @@ module uart_fifo # (
    //
    // POP from TX FIFO is it is NOT empty and we are NOT transmitting
    //
-   
+
    always @(posedge clk)
      if (rst) begin
         tx_fifo_pop <= 1'b0;

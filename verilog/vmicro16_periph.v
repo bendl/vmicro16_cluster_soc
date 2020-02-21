@@ -75,7 +75,8 @@ module vmicro16_watchdog_apb # (
 endmodule
 
 module timer_apb # (
-    parameter CLK_HZ = 50_000_000
+  parameter CLK_HZ = 50_000_000,
+  parameter DATA_WIDTH = 16
 ) (
     input clk,
     input reset,
@@ -90,23 +91,23 @@ module timer_apb # (
     input                           S_PWRITE,
     input                           S_PSELx,
     input                           S_PENABLE,
-    input      [`DATA_WIDTH-1:0]    S_PWDATA,
+    input      [DATA_WIDTH-1:0]    S_PWDATA,
 
-    output reg [`DATA_WIDTH-1:0]    S_PRDATA,
+    output reg [DATA_WIDTH-1:0]    S_PRDATA,
     output                          S_PREADY,
 
     output out,
-    output [`DATA_WIDTH-1:0] int_data
+    output [DATA_WIDTH-1:0] int_data
 );
     //assign S_PRDATA = (S_PSELx & S_PENABLE) ? swex_success ? 16'hF0F0 : 16'h0000;
     assign S_PREADY = (S_PSELx & S_PENABLE) ? 1'b1 : 1'b0;
     wire   en       = (S_PSELx & S_PENABLE);
     wire   we       = (en & S_PWRITE);
 
-    reg [`DATA_WIDTH-1:0] r_counter = 0;
-    reg [`DATA_WIDTH-1:0] r_load = 0;
-    reg [`DATA_WIDTH-1:0] r_pres = 0;
-    reg [`DATA_WIDTH-1:0] r_ctrl = 0;
+    reg [DATA_WIDTH-1:0] r_counter = 0;
+    reg [DATA_WIDTH-1:0] r_load = 0;
+    reg [DATA_WIDTH-1:0] r_pres = 0;
+    reg [DATA_WIDTH-1:0] r_ctrl = 0;
 
     localparam CTRL_START = 0;
     localparam CTRL_RESET = 1;
@@ -129,7 +130,7 @@ module timer_apb # (
 
     // prescaler counts from r_pres to 0, emitting a stb signal
     //   to enable the r_counter step
-    reg [`DATA_WIDTH-1:0] r_pres_counter = 0;
+    reg [DATA_WIDTH-1:0] r_pres_counter = 0;
     wire counter_en = (r_pres_counter == 0);
     always @(posedge clk)
         if (r_pres_counter == 0)
@@ -169,7 +170,7 @@ module timer_apb # (
     // generate the output pulse when r_counter == 0
     //   out = (counter reached zero && counter started)
     assign out      = (r_counter == 0) && r_ctrl[CTRL_START]; // && r_ctrl[CTRL_INT];
-    assign int_data = {`DATA_WIDTH{1'b1}};
+    assign int_data = {DATA_WIDTH{1'b1}};
 endmodule
 
 
@@ -196,8 +197,8 @@ module vmicro16_bram_prog_apb # (
     output                          S_PREADY,
 
     // interface to program the instruction memory
-    input     [`clog2(`DEF_MEM_INSTR_DEPTH)-1:0] addr,
-    input     [`DATA_WIDTH-1:0]                  data,
+    input     [`clog2(64)-1:0] addr,
+    input     [MEM_WIDTH-1:0]                  data,
     input                                        we,
     input                                        prog
 );
@@ -207,9 +208,9 @@ module vmicro16_bram_prog_apb # (
     assign S_PREADY = (S_PSELx & S_PENABLE) ? 1'b1    : 1'b0;
     wire s_we = (S_PSELx & S_PENABLE & S_PWRITE);
 
-    wire [`clog2(`DEF_MEM_INSTR_DEPTH)-1:0] mem_addr = we ? addr : S_PADDR;
-    wire [`DATA_WIDTH-1:0]                  mem_data = we ? data : S_PWDATA;
-    wire                                    mem_we   = we | s_we;
+    wire [`clog2(64)-1:0] mem_addr = we ? addr : S_PADDR;
+    wire [MEM_WIDTH-1:0] mem_data = we ? data : S_PWDATA;
+    wire                  mem_we   = we | s_we;
 
     vmicro16_bram # (
         .MEM_WIDTH  (MEM_WIDTH),
@@ -296,7 +297,7 @@ module vmicro16_bram_ex_apb # (
 
     // |19    |18    |16             |15          0|
     // | LWEX | SWEX | 3 bit CORE_ID |     S_PADDR |
-    input  [`APB_WIDTH-1:0]         S_PADDR,
+    input  [16-1:0]         S_PADDR,
 
     input                           S_PWRITE,
     input                           S_PSELx,
@@ -330,7 +331,7 @@ module vmicro16_bram_ex_apb # (
     //   http://infocenter.arm.com/help/index.jsp?topic=/com.arm.doc.dui0204f/Cihbghef.html
 
     // mem_wd is the CORE_ID sent in bits [18:16]
-    localparam TOP_BIT_INDEX         = `APB_WIDTH -1;
+    localparam TOP_BIT_INDEX         = 16 -1;
     localparam PADDR_CORE_ID_MSB     = TOP_BIT_INDEX - 2;
     localparam PADDR_CORE_ID_LSB     = PADDR_CORE_ID_MSB - (CORE_ID_BITS-1);
 

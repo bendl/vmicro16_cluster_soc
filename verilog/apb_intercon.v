@@ -187,4 +187,6 @@ module apb_intercon_s # (
     S_PREADY[granted_int]                          = a_M_PREADY;
     S_PRDATA[granted_int*DATA_WIDTH +: DATA_WIDTH] = a_M_PRDATA;
   end
+
 endmodule
+

@@ -39,8 +39,8 @@ module tb_cluster # (
     .DATA_WIDTH         (DATA_WIDTH),
     .MASTER_PORTS       (NUM_CLUSTERS),
     .SLAVE_PORTS        (NUM_MAIN_PERIPHS),
-    .ADDR_MSB           (`IC_DMEM_DEC_MSB),
-    .ADDR_LSB           (`IC_DMEM_DEC_LSB)
+    .ADDR_MSB           (12),
+    .ADDR_LSB           (12)
   ) main_ic (
     .clk                (clk),
     .reset              (reset),
@@ -64,19 +64,19 @@ module tb_cluster # (
 
   vmicro16_periph_sect # (
     .MASTERS            (1),
-    .SLAVES             (`IC_DMEM_PMEM_PSEL__NUM),
-    .ADDR_MSB           (`IC_DMEM_PMEM_DEC_MSB),
-    .ADDR_LSB           (`IC_DMEM_PMEM_DEC_LSB)
+    .SLAVES             (8),
+    .ADDR_MSB           (7),
+    .ADDR_LSB           (4)
   ) periphs_sub_ic (
     .clk                (clk),
     .reset              (reset),
     .S_PADDR            (M_PADDR),
     .S_PWRITE           (M_PWRITE),
-    .S_PSELx            (M_PSELx[`IC_DMEM_PSEL_PERI]),
+    .S_PSELx            (M_PSELx[0]),
     .S_PENABLE          (M_PENABLE),
     .S_PWDATA           (M_PWDATA),
-    .S_PRDATA           (M_PRDATA[`IC_DMEM_PSEL_PERI*`DATA_WIDTH +: `DATA_WIDTH]),
-    .S_PREADY           (M_PREADY[`IC_DMEM_PSEL_PERI])
+    .S_PRDATA           (M_PRDATA[0*DATA_WIDTH +: DATA_WIDTH]),
+    .S_PREADY           (M_PREADY[0])
   );
 
   // register apb test peripheral
@@ -91,11 +91,11 @@ module tb_cluster # (
     // apb slave to master interface
     .S_PADDR           (M_PADDR),
     .S_PWRITE          (M_PWRITE),
-    .S_PSELx           (M_PSELx[`IC_DMEM_PSEL_DMEM]),
+    .S_PSELx           (M_PSELx[1]),
     .S_PENABLE         (M_PENABLE),
     .S_PWDATA          (M_PWDATA),
-    .S_PRDATA          (M_PRDATA[`IC_DMEM_PSEL_DMEM*`DATA_WIDTH +: `DATA_WIDTH]),
-    .S_PREADY          (M_PREADY[`IC_DMEM_PSEL_DMEM])
+    .S_PRDATA          (M_PRDATA[1*DATA_WIDTH +: DATA_WIDTH]),
+    .S_PREADY          (M_PREADY[1])
   );
 
   genvar cluster;

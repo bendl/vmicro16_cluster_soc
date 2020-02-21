@@ -12,7 +12,7 @@ module tb_vmicro16_soc;
     reg reset;
 
     wire halt;
-    wire [`APB_GPIO1_PINS-1:0] gpio1;
+    wire [8-1:0] gpio1;
 
     // Create clock signal
     always #10 clk = ~clk;
@@ -29,7 +29,7 @@ module tb_vmicro16_soc;
         // Initialize Inputs
         clk = 0;
         reset = 1;
-        
+
         // Assert reset for n clocks minumum
         @(posedge clk);
         @(posedge clk);

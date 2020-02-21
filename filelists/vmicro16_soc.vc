@@ -3,12 +3,13 @@
 ../verilog/apb_intercon.v
 
 ../verilog/uart/uart.v
-../verilog/uart/apb_uart.v
+../verilog/uart/fifo.v
+../verilog/uart/uart_fifo.v
 ../verilog/uart/apb_uart.v
 
 ../verilog/vmicro16_soc.v
 ../verilog/vmicro16_periph.v
 ../verilog/vmicro16_periph_sect.v
 
-../verilog/test/tb_vmicro16_soc.v
+../verilog/vmicro16_cluster.v
 

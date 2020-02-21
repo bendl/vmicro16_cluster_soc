@@ -12,7 +12,7 @@ module tb_vmicro16_soc_cluster;
     reg reset;
 
     wire halt;
-    wire [`APB_GPIO1_PINS-1:0] gpio1;
+    wire [8-1:0] gpio1;
 
     // Create clock signal
     always #10 clk = ~clk;
