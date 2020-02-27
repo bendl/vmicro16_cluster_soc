@@ -6,7 +6,7 @@
 `include "clog2.v"
 `include "formal.v"
 
-module apb_ic_dec_v2 # (
+module apb_ic_addr_dec # (
   parameter MSB        = 7,
   parameter LSB        = 4,
   parameter ADDR_WIDTH = 16,
@@ -27,7 +27,7 @@ module apb_ic_dec_v2 # (
 
 endmodule
 
-module apb_ic_arbiter_v2 # (
+module apb_ic_arbiter # (
   parameter NUM_MASTERS = 4
 ) (
   input clk,
@@ -36,28 +36,8 @@ module apb_ic_arbiter_v2 # (
   input      [NUM_MASTERS-1:0] reqs,
   output reg [NUM_MASTERS-1:0] grants
 );
-  // rotating arbiter barrel shift parts
-  wire                      rotate_msb;
-  wire  [NUM_MASTERS-1-1:0] rotate_lsbs;
-  assign rotate_msb = grants[NUM_MASTERS-1];
-
-  generate
-    if (NUM_MASTERS == 1)
-      assign rotate_lsbs = grants[0];
-    else if (NUM_MASTERS == 2)
-      assign rotate_lsbs = grants[NUM_MASTERS-1:0];
-    else if (NUM_MASTERS >= 3)
-      assign rotate_lsbs = grants[NUM_MASTERS-2:0];
-  endgenerate
-
-  wire [NUM_MASTERS-1:0] current_grant_active = (reqs & grants);
-  wire                   granted_finished     = ~(|(reqs & grants));
-  wire                   no_reqs              = ~(|reqs);
-  wire [NUM_MASTERS-1:0] grants_nxt           = no_reqs
-                                              ? grants
-                                              : granted_finished
-                                                ? {rotate_lsbs, rotate_msb}
-                                                : grants;
+  wire [NUM_MASTERS-1:0] grants_nxt;
+  assign grants_nxt = (grants << 1) | grants[NUM_MASTERS-1];
 
   always @(posedge clk) begin
     if (reset) grants <= 1;
@@ -65,14 +45,8 @@ module apb_ic_arbiter_v2 # (
   end
 
 `ifdef FORMAL
-  // grants must always be 1h
-  //always @(*) `rassert (grants);
-
-  // Print when changing grants
-  always @(posedge clk)
-    if (grants_nxt != grants)
-      $display($time, " arbiter grant: %b", grants_nxt);
 `endif
+
 endmodule
 
 module apb_intercon_s # (
@@ -140,7 +114,7 @@ module apb_intercon_s # (
     S_PENABLE_gate <= 1'b1;
 
   // Arbitrate incoming master requests
-  apb_ic_arbiter_v2 # (
+  apb_ic_arbiter # (
     .NUM_MASTERS(MASTER_PORTS)
   ) arbiter (
     .clk        (clk),
@@ -150,7 +124,7 @@ module apb_intercon_s # (
   );
 
   // Decode master PADDR to determine slave PSEL
-  apb_ic_dec_v2 # (
+  apb_ic_addr_dec # (
     .MSB        (ADDR_MSB),
     .LSB        (ADDR_LSB),
     .ADDR_WIDTH (BUS_WIDTH)

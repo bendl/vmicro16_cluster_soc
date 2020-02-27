@@ -27,13 +27,15 @@ module tb_vmicro16_soc;
   end
 
   initial begin
+    $display("tb_vmicro16_soc %d", g);
+
     // Initialize Inputs
     clk = 0;
     reset = 1;
 
-    for (g = 0; g < 10; g = g+1) begin
-      $display("tb_vmicro16_soc %d", g);
-    end
+    repeat (5) @(posedge clk);
+    reset = 0;
+    $display("Reset lowered");
 
     // Assert reset for n clocks minumum
     @(posedge clk);
