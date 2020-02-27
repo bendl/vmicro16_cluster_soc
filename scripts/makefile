@@ -38,4 +38,5 @@ soc.out: compile
 $(TBNAME).vcd: sim
 
 wave: $(TBNAME).vcd
-	gktwave $(TBNAME).vcd
+	/Applications/gtkwave.app/Contents/Resources/bin/gtkwave $(TBNAME).vcd saved.wav
+	#gktwave $(TBNAME).vcd
