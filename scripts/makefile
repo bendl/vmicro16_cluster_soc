@@ -17,6 +17,8 @@ SIMFLAGS=-v
 
 OUTFILE=a.out
 
+ASM=../sw/demos/asm/addloop.s
+
 .PHONY: clean
 
 all: compile
@@ -27,7 +29,7 @@ pre:
 clean:
 	rm -rf *
 
-compile: $(SRCS)
+compile: $(SRCS) asm
 	$(COMPILER) -o soc.out -s tb_vmicro16_soc -I$(INC_DIR) $(SRCS)
 
 sim: soc.out
@@ -40,3 +42,6 @@ $(TBNAME).vcd: sim
 wave: $(TBNAME).vcd
 	/Applications/gtkwave.app/Contents/Resources/bin/gtkwave $(TBNAME).vcd saved.wav
 	#gktwave $(TBNAME).vcd
+
+asm:
+	python3 ../sw/asm.py $(ASM)

@@ -7,8 +7,8 @@
 
 module vmicro16_cluster #
 (
-  parameter BUS_WIDTH           = 16,
-  parameter DATA_WIDTH          = 16,
+  parameter BUS_WIDTH           = 32,
+  parameter DATA_WIDTH          = 32,
   parameter NCORES              = 4,
   parameter CLUSTER_CACHE       = 1, // TODO: impl
   parameter CLUSTER_CACHE_WORDS = 64

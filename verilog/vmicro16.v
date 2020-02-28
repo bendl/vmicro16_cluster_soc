@@ -53,14 +53,10 @@ module vmicro16_bram # (
 
         if (USE_INITS) begin
             //`define TEST_SW
-            `ifdef TEST_SW
-            $readmemh("E:\\Projects\\uni\\vmicro16\\sw\\verilog_memh.txt", mem);
-            `endif
-
             `define TEST_ASM
             `ifdef TEST_ASM
             //$readmemh("E:\\Projects\\uni\\vmicro16\\sw\\asm.s.hex", mem);
-            $readmemh("sw/asm.s.hex", mem);
+            $readmemh("asm.s.hex", mem);
             `endif
 
             //`define TEST_COND
@@ -181,7 +177,7 @@ endmodule
 
 
 module vmicro16_core_mmu # (
-    parameter MEM_WIDTH     = 16,
+    parameter MEM_WIDTH     = 32,
     parameter MEM_DEPTH     = 64,
 
     parameter CORE_ID       = 3'h0,
@@ -390,7 +386,7 @@ module vmicro16_core_mmu # (
 endmodule
 
 module vmicro16_regs # (
-    parameter CELL_WIDTH        = 16,
+    parameter CELL_WIDTH        = 32,
     parameter CELL_DEPTH        = 8,
     parameter CELL_SEL_BITS     = `clog2(CELL_DEPTH),
     parameter CELL_DEFAULTS     = 0,
@@ -759,7 +755,7 @@ endmodule
 
 
 module vmicro16_core # (
-    parameter DATA_WIDTH        = 16,
+    parameter DATA_WIDTH        = 32,
     parameter MEM_INSTR_DEPTH   = 64,
     parameter MEM_SCRATCH_DEPTH = 64,
     parameter MEM_WIDTH         = 16,
@@ -1145,7 +1141,7 @@ module vmicro16_core # (
     // Software registers
     vmicro16_regs # (
         .CORE_ID    (CORE_ID),
-        .CELL_WIDTH (`DATA_WIDTH)
+        .CELL_WIDTH (DATA_WIDTH)
     ) regs (
         .clk        (clk),
         .reset      (reset),
@@ -1165,7 +1161,7 @@ module vmicro16_core # (
     `ifdef DEF_ENABLE_INT
     vmicro16_regs # (
         .CORE_ID    (CORE_ID),
-        .CELL_WIDTH (`DATA_WIDTH),
+        .CELL_WIDTH (DATA_WIDTH),
         .DEBUG_NAME ("REGSINT")
     ) regs_intr (
         .clk        (clk),

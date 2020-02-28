@@ -31,14 +31,14 @@ endmodule
 // and interrupts
 module vmicro16_soc # (
   parameter NUM_CLUSTERS = 1,
-  parameter NUM_CORES    = 4,
+  parameter NUM_CORES    = 2,
 
-  parameter DATA_WIDTH = 16,
+  parameter DATA_WIDTH = 32,
 
   parameter GLOBAL_RESET = 1,
   parameter USE_BUS_RESET = 1,
 
-  parameter APB_WIDTH = 16,
+  parameter APB_WIDTH = 32,
   parameter APB_GPIO0_PINS = 8,
   parameter APB_GPIO1_PINS = 8,
   parameter APB_GPIO2_PINS = 8

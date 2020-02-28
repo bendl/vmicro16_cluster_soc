@@ -7,8 +7,8 @@
 `include "formal.v"
 
 module vmicro16_periph_sect # (
-  parameter BUS_WIDTH = 16,
-  parameter DATA_WIDTH = 16,
+  parameter BUS_WIDTH = 32,
+  parameter DATA_WIDTH = 32,
   parameter CORES    = 1,
   parameter SLAVES   = 8,
   parameter ADDR_MSB = 7,
