@@ -21,7 +21,7 @@ ASM=../sw/demos/asm/addloop.s
 
 .PHONY: clean
 
-all: compile
+all: verilog
 
 pre:
 	iverilog -E -o preprocessed.v -I$(INC_DIR) $(SRCS)
@@ -29,13 +29,13 @@ pre:
 clean:
 	rm -rf *
 
-compile: $(SRCS) asm
+verilog: $(SRCS) asm
 	$(COMPILER) -o soc.out -s tb_vmicro16_soc -I$(INC_DIR) $(SRCS)
 
 sim: soc.out
 	vvp soc.out
 
-soc.out: compile
+soc.out: verilog
 
 $(TBNAME).vcd: sim
 
