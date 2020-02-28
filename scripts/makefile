@@ -40,7 +40,7 @@ soc.out: compile
 $(TBNAME).vcd: sim
 
 wave: $(TBNAME).vcd
-	/Applications/gtkwave.app/Contents/Resources/bin/gtkwave $(TBNAME).vcd saved.wav
+	/Applications/gtkwave.app/Contents/Resources/bin/gtkwave $(TBNAME).vcd ../verilog/test/waves/saved.gtkw
 	#gktwave $(TBNAME).vcd
 
 asm:
