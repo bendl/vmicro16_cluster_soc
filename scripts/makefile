@@ -27,7 +27,7 @@ pre: $(SRCS) asm.s.hex
 	iverilog -E -o preprocessed.v -I$(INC_DIR) $(SRCS)
 
 clean:
-	rm -rf *
+	rm -f asm.s.hex $(TBNAME).vcd soc.out
 
 verilog: $(SRCS) asm.s.hex soc.out
 
