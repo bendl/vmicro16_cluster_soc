@@ -19,11 +19,11 @@ OUTFILE=a.out
 
 ASM=../sw/demos/asm/addloop.s
 
-.PHONY: all clean pre verilog sim wave
+.PHONY: all clean pre verilog asm sim wave
 
 all: soc.out
 
-pre:
+pre: $(SRCS) asm.s.hex
 	iverilog -E -o preprocessed.v -I$(INC_DIR) $(SRCS)
 
 clean:
@@ -43,6 +43,8 @@ $(TBNAME).vcd: soc.out
 wave: $(TBNAME).vcd soc.out
 	/Applications/gtkwave.app/Contents/Resources/bin/gtkwave $(TBNAME).vcd ../verilog/test/waves/saved.gtkw
 	#gktwave $(TBNAME).vcd
+
+asm: $(ASM) asm.s.hex
 
 asm.s.hex: $(ASM)
 	python3 ../sw/asm.py $(ASM)
